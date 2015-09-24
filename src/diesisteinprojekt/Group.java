@@ -6,6 +6,7 @@ public class Group {
 	private String name;
 	private Integer groupID;
 	private ArrayList members;
+	// ToDo bnlabla
 	
 	public String getName() {
 		return name;
