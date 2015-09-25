@@ -26,9 +26,10 @@ public class GUIHelper {
 	 *	 
 	 * @return frame
 	 */
-	public JFrame setFrame() {
-		frame.setSize(400, 600);
+	public JFrame setFrame(int x, int y) {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new GridLayout(3, 1));
+		frame.setPreferredSize(new Dimension(x, y));
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);  
 		return frame;

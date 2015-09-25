@@ -4,8 +4,10 @@ public class User {
 	private String name;
 	private String givenName;
 	private int age;
-	private boolean hasGroup;
-	private Integer groupID;
+	
+	private Group group;
+	//private boolean hasGroup;
+	//private Integer groupID;
 	    
     public String getName() {
         return name;
@@ -31,25 +33,12 @@ public class User {
     	this.age = age;
     }
     
-    public boolean getHasGroup() {
-    	return hasGroup;
+    public Group getGroup() {
+    	return group;
     }
     
-    public void setHasGroup(boolean hasGroup) {
-    	this.hasGroup = hasGroup;
-    }
-    
-    public Integer getGroupID() {
-    	return groupID;
-    }
-    
-    public void setGroupID(Integer groupID) {
-    	if (hasGroup == true) {
-    		this.groupID = groupID;
-    	}
-    	else {
-    		this.groupID = null;
-    	}
+    public void setGroup(Group group) {
+    	this.group = group;
     }
 
 }

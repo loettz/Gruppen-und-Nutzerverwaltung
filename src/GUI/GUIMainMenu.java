@@ -19,9 +19,9 @@ public class GUIMainMenu {
 
 	private void setupGui() {
 		final GUIHelper guihelper = new GUIHelper();
-		JFrame frame = guihelper.setFrame();
+		final JFrame frame = guihelper.setFrame(600, 600);
 		
-		final JPanel mainPanel = guihelper.setPanelWithGrid(600, 600, 3, 1);
+		//final JPanel mainPanel = guihelper.setPanelWithGrid(600, 600, 3, 1);
 		final JPanel menuTitlePanel = guihelper.setPanel();
 		menuTitlePanel.setBackground(Color.white);
 		JLabel menuTitle = guihelper.setLabel("Hauptmenü", 36);
@@ -41,12 +41,12 @@ public class GUIMainMenu {
 		//JLabel menuActionLabel = guihelper.setLabel("hier passiert was...späda", 12);
 		//menuActionPanel.add(menuActionLabel);
 		
-		mainPanel.add(menuTitlePanel);
-		mainPanel.add(menuButtonPanel);
-		mainPanel.add(menuActionPanel);
+		frame.add(menuTitlePanel);
+		frame.add(menuButtonPanel);
+		frame.add(menuActionPanel);
 			
-		
-		frame.getContentPane().add(mainPanel);
+		guihelper.endFrame();
+		//frame.getContentPane().add(mainPanel);
 		
 		createUserButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -56,32 +56,32 @@ public class GUIMainMenu {
 				final JPanel createUserAction = createuser.createUserAction();
 				JButton back = guihelper.setButton("Zurück ins Menü");
 				createUserButton.add(back);
-				mainPanel.removeAll();
-				mainPanel.add(createUserTitle);
-				mainPanel.add(createUserButton);
-				mainPanel.add(createUserAction);
-				mainPanel.revalidate();
-				mainPanel.repaint();
+				frame.removeAll();
+				frame.add(createUserTitle);
+				frame.add(createUserButton);
+				frame.add(createUserAction);
+				frame.revalidate();
+				frame.repaint();
 				
 				back.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						mainPanel.removeAll();
+						frame.removeAll();
 						//mainPanel.remove(createUserButton);
 						//mainPanel.remove(createUserAction);
 						
-						mainPanel.add(menuTitlePanel);
-						mainPanel.add(menuButtonPanel);
-						mainPanel.add(menuActionPanel);
+						frame.add(menuTitlePanel);
+						frame.add(menuButtonPanel);
+						frame.add(menuActionPanel);
 						
-						mainPanel.revalidate();
-						mainPanel.repaint();
+						frame.revalidate();
+						frame.repaint();
 						
 					}
 				});
 			}
 		});
 		
-		guihelper.endFrame();
+		
 	}
 	
 }
