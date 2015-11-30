@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GUICreateUser {
+public class ALTGUICreateUser {
 	
 	
 	public JPanel createUserTitle() {

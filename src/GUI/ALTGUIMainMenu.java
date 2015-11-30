@@ -9,11 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GUIMainMenu {
+public class ALTGUIMainMenu {
 
 	public static void main(String[] args) {
-		GUIMainMenu main = new GUIMainMenu();
-		main.setupGui();
+		ALTGUIMainMenu main = new ALTGUIMainMenu();
+//		main.setupGui();
 
 	}
 
@@ -50,13 +50,13 @@ public class GUIMainMenu {
 		
 		createUserButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUICreateUser createuser = new GUICreateUser();
+				ALTGUICreateUser createuser = new ALTGUICreateUser();
 				final JPanel createUserTitle = createuser.createUserTitle();
 				final JPanel createUserButton = createuser.createUserButton();
 				final JPanel createUserAction = createuser.createUserAction();
 				JButton back = guihelper.setButton("Zurück ins Menü");
 				createUserButton.add(back);
-				frame.removeAll();
+				frame.getContentPane().removeAll();
 				frame.add(createUserTitle);
 				frame.add(createUserButton);
 				frame.add(createUserAction);
@@ -65,7 +65,7 @@ public class GUIMainMenu {
 				
 				back.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						frame.removeAll();
+						frame.getContentPane().removeAll();
 						//mainPanel.remove(createUserButton);
 						//mainPanel.remove(createUserAction);
 						
