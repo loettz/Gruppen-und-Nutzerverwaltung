@@ -12,6 +12,10 @@ public class showGroupPanel extends JPanel{
 	private JPanel showGroupTitlePanel;
 	private JPanel showGroupButtonPanel;
 	private JPanel showGroupActionPanel;
+	private JLabel createGroupTitle;
+	private JButton save;
+	private JButton back;
+	
 	private GUIHelper guihelper = new GUIHelper();
 	
 	public showGroupPanel() {
@@ -25,12 +29,12 @@ public class showGroupPanel extends JPanel{
 		setVisible(true);
 		
 		showGroupTitlePanel = guihelper.setPanel();
-		JLabel createGroupTitle = guihelper.setLabel("Gruppen anzeigen", 36);
+		createGroupTitle = guihelper.setLabel("Gruppen anzeigen", 36);
 		showGroupTitlePanel.add(createGroupTitle);
 		
 		showGroupButtonPanel = guihelper.setPanel();
-		JButton save = guihelper.setButton("Speichern");
-		JButton back = guihelper.setButton("Zurück ins Menü");
+		save = guihelper.setButton("Speichern");
+		back = guihelper.setButton("Zurück ins Menü");
 		showGroupButtonPanel.add(save);
 		showGroupButtonPanel.add(back);
 		

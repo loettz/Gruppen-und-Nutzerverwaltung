@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,10 +14,21 @@ public class mainPanel extends JPanel{
 	private JPanel mainTitlePanel;
 	private JPanel mainButtonPanel;
 	private JPanel mainActionPanel;
+	
+	private JButton createUserButton;
+	private JButton createGroupButton;
+	private JButton showGroupsButton;
+	
+	
+	private Frame frame;
+	
 	private GUIHelper guihelper = new GUIHelper();
 	
-	public mainPanel() {
+	public mainPanel(Frame frame) {
+		super();
+		this.frame = frame;
 		createMainPanel();
+		installListener();
 	}
 	
 	public void createMainPanel() {
@@ -28,9 +41,9 @@ public class mainPanel extends JPanel{
 		mainTitlePanel.add(menuTitle);
 		
 		mainButtonPanel = guihelper.setPanel();
-		JButton createUserButton = guihelper.setButton("Teilnehmer erstellen");
-		JButton createGroupButton = guihelper.setButton("Gruppe erstellen");
-		JButton showGroupsButton = guihelper.setButton("Gruppen anzeigen");
+		createUserButton = guihelper.setButton("Teilnehmer erstellen");
+		createGroupButton = guihelper.setButton("Gruppe erstellen");
+		showGroupsButton = guihelper.setButton("Gruppen anzeigen");
 		mainButtonPanel.add(createUserButton);
 		mainButtonPanel.add(createGroupButton);
 		mainButtonPanel.add(showGroupsButton);
@@ -41,5 +54,14 @@ public class mainPanel extends JPanel{
 		add(mainTitlePanel);
 		add(mainButtonPanel);
 		add(mainActionPanel);
+	}
+	
+	public void installListener(){
+		createUserButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				frame.switchPanel(Frame.CREATEUSERR);
+			}
+		});
 	}
 }

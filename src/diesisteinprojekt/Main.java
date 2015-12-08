@@ -1,12 +1,19 @@
 package diesisteinprojekt;
 
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+import GUI.Frame;
+import GUI.createUserPanel;
+
 //import com.sun.org.apache.xml.internal.resolver.helpers.Debug;
 
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Hallo Welt"); 
-		// TODO Auto-generated method stub
+		new Frame();
+		
 
 	}
 

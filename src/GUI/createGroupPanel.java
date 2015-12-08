@@ -13,6 +13,12 @@ public class createGroupPanel extends JPanel{
 	private JPanel createGroupTitlePanel;
 	private JPanel createGroupButtonPanel;
 	private JPanel createGroupActionPanel;
+	private JLabel createGroupTitle;
+	private JButton save;
+	private JButton back;
+	private JLabel groupSizeLabel;
+	private JTextField groupSize;
+	private JButton create;
 	private GUIHelper guihelper = new GUIHelper();
 	
 	public createGroupPanel() {
@@ -26,19 +32,19 @@ public class createGroupPanel extends JPanel{
 		setVisible(true);
 		
 		createGroupTitlePanel = guihelper.setPanel();
-		JLabel createGroupTitle = guihelper.setLabel("Gruppe erstellen", 36);
+		createGroupTitle = guihelper.setLabel("Gruppe erstellen", 36);
 		createGroupTitlePanel.add(createGroupTitle);
 		
 		createGroupButtonPanel = guihelper.setPanel();
-		JButton save = guihelper.setButton("Speichern");
-		JButton back = guihelper.setButton("Zurück ins Menü");
+		save = guihelper.setButton("Speichern");
+		back = guihelper.setButton("Zurück ins Menü");
 		createGroupButtonPanel.add(save);
 		createGroupButtonPanel.add(back);
 		
 		createGroupActionPanel = guihelper.setPanelWithGrid(200, 400, 2, 1);
-		JLabel groupSizeLabel = guihelper.setLabel("Anzahl Teilnehmer:", 14);
-		JTextField groupSize = guihelper.setTextField();
-		JButton create = guihelper.setButton("Gruppe erstellen");
+		groupSizeLabel = guihelper.setLabel("Anzahl Teilnehmer:", 14);
+		groupSize = guihelper.setTextField();
+		create = guihelper.setButton("Gruppe erstellen");
 		createGroupActionPanel.add(groupSizeLabel);
 		createGroupActionPanel.add(groupSize);
 		createGroupActionPanel.add(create);
