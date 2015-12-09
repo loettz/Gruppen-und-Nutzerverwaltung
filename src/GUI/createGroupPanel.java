@@ -1,7 +1,10 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,10 +22,18 @@ public class createGroupPanel extends JPanel{
 	private JLabel groupSizeLabel;
 	private JTextField groupSize;
 	private JButton create;
+	
+	private Frame frame;
+	private cardLayoutPanel cards;
+	
 	private GUIHelper guihelper = new GUIHelper();
 	
-	public createGroupPanel() {
+	public createGroupPanel(Frame frame, cardLayoutPanel cards) {
+		super();
+		this.frame = frame;
+		this.cards = cards;
 		createGroup();
+		installListener();
 	}
 	
 	public void createGroup() {
@@ -55,6 +66,17 @@ public class createGroupPanel extends JPanel{
 		
 
 		
+		
+	}
+	public void installListener(){
+		back.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, Frame.MAINPANEL);
+			}
+		});
 		
 	}
 

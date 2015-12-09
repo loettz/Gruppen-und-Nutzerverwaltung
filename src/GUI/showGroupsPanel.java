@@ -1,13 +1,16 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class showGroupPanel extends JPanel{
+public class showGroupsPanel extends JPanel{
 	
 	private JPanel showGroupTitlePanel;
 	private JPanel showGroupButtonPanel;
@@ -16,10 +19,17 @@ public class showGroupPanel extends JPanel{
 	private JButton save;
 	private JButton back;
 	
+	private Frame frame;
+	private cardLayoutPanel cards;
+	
 	private GUIHelper guihelper = new GUIHelper();
 	
-	public showGroupPanel() {
+	public showGroupsPanel(Frame frame, cardLayoutPanel cards) {
+		super();
+		this.frame = frame;
+		this.cards = cards;
 		showGroup();
+		installListener();
 	}
 	
 	public void showGroup() {
@@ -44,6 +54,17 @@ public class showGroupPanel extends JPanel{
 		add(showGroupTitlePanel);
 		add(showGroupButtonPanel);
 		add(showGroupActionPanel);
+	}
+	public void installListener(){
+		back.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, Frame.MAINPANEL);
+			}
+		});
+		
 	}
 
 }

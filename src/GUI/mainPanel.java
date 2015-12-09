@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,14 +20,14 @@ public class mainPanel extends JPanel{
 	private JButton createGroupButton;
 	private JButton showGroupsButton;
 	
-	
 	private Frame frame;
-	
+	private cardLayoutPanel cards;
 	private GUIHelper guihelper = new GUIHelper();
 	
-	public mainPanel(Frame frame) {
+	public mainPanel(Frame frame, cardLayoutPanel cards) {
 		super();
 		this.frame = frame;
+		this.cards = cards;
 		createMainPanel();
 		installListener();
 	}
@@ -60,8 +61,27 @@ public class mainPanel extends JPanel{
 		createUserButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				frame.switchPanel(Frame.CREATEUSERR);
+				
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, Frame.CREATEUSER);
 			}
 		});
+		createGroupButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, Frame.CREATEGROUP);
+			}
+		});
+		showGroupsButton.addActionListener(new ActionListener() {
+	
+			public void actionPerformed(ActionEvent arg0) {
+		
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, Frame.SHOWGROUPS);
+		}
+		});
+
 	}
 }
