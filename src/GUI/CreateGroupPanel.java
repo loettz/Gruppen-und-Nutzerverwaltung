@@ -11,11 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class createGroupPanel extends JPanel{
+public class CreateGroupPanel extends MAINMainPanel{
 	
-	private JPanel createGroupTitlePanel;
-	private JPanel createGroupButtonPanel;
-	private JPanel createGroupActionPanel;
 	private JLabel createGroupTitle;
 	private JButton save;
 	private JButton back;
@@ -24,47 +21,34 @@ public class createGroupPanel extends JPanel{
 	private JButton create;
 	
 	private Frame frame;
-	private cardLayoutPanel cards;
+	private CardLayoutPanel cards;
 	
 	private GUIHelper guihelper = new GUIHelper();
 	
-	public createGroupPanel(Frame frame, cardLayoutPanel cards) {
+	public CreateGroupPanel(Frame frame, CardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
-		createGroup();
+		setPanels();
 		installListener();
 	}
-	
-	public void createGroup() {
+	public void setPanels() {
 		
-		setLayout(new GridLayout(3, 1));
-		setPreferredSize(new Dimension(600, 600));
-		setVisible(true);
-		
-		createGroupTitlePanel = guihelper.setPanel();
 		createGroupTitle = guihelper.setLabel("Gruppe erstellen", 36);
-		createGroupTitlePanel.add(createGroupTitle);
+		TitlePanel.add(createGroupTitle);
 		
-		createGroupButtonPanel = guihelper.setPanel();
 		save = guihelper.setButton("Speichern");
 		back = guihelper.setButton("Zurück ins Menü");
-		createGroupButtonPanel.add(save);
-		createGroupButtonPanel.add(back);
+		ButtonPanel.add(save);
+		ButtonPanel.add(back);
 		
-		createGroupActionPanel = guihelper.setPanelWithGrid(200, 400, 2, 1);
+		ActionPanel.setLayout(new GridLayout(2, 1));
 		groupSizeLabel = guihelper.setLabel("Anzahl Teilnehmer:", 14);
 		groupSize = guihelper.setTextField();
 		create = guihelper.setButton("Gruppe erstellen");
-		createGroupActionPanel.add(groupSizeLabel);
-		createGroupActionPanel.add(groupSize);
-		createGroupActionPanel.add(create);
-		
-		add(createGroupTitlePanel);
-		add(createGroupButtonPanel);
-		add(createGroupActionPanel);
-		
-
+		ActionPanel.add(groupSizeLabel);
+		ActionPanel.add(groupSize);
+		ActionPanel.add(create);
 		
 		
 	}
@@ -81,3 +65,4 @@ public class createGroupPanel extends JPanel{
 	}
 
 }
+	

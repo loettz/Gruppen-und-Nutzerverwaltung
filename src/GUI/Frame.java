@@ -15,7 +15,7 @@ public class Frame extends JFrame{
 	public final static String SHOWGROUPS = "Card with showgroups";
 	
 	
-	public JPanel cards = new cardLayoutPanel();
+	public JPanel cards = new CardLayoutPanel();
 	//JPanel mainP = new mainPanel(this);
 	//JPanel createUserP = new createUserPanel();
 	
