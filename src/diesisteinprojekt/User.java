@@ -1,5 +1,7 @@
 package diesisteinprojekt;
 
+import java.util.Date;
+
 public class User {
 	private String name;
 	private String givenName;

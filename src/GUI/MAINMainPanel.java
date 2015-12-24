@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import diesisteinprojekt.DBHandler;
+
 public abstract class MAINMainPanel extends JPanel{
 
 	protected JPanel TitlePanel = new JPanel();
@@ -18,6 +20,8 @@ public abstract class MAINMainPanel extends JPanel{
 	protected CardLayoutPanel cards;
 	
 	protected GUIHelper guihelper = new GUIHelper();
+	
+	protected DBHandler dbhandler = new DBHandler();
 	
 	public MAINMainPanel() {
 		createMAINMainPanel();
