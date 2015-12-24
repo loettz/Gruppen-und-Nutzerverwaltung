@@ -3,7 +3,7 @@ package diesisteinprojekt;
 public class User {
 	private String name;
 	private String givenName;
-	private int age;
+	private Date birthDate;
 	
 	private Group group;
 	//private boolean hasGroup;
@@ -25,12 +25,12 @@ public class User {
         this.givenName = givenName;
     }
     
-    public int getAge() {
-    	return age;
+    public Date getAge() {
+    	return birthDate;
     }
     
-    public void setAge(int age) {
-    	this.age = age;
+    public void setAge(Date birthDate) {
+    	this.birthDate = birthDate;
     }
     
     public Group getGroup() {
