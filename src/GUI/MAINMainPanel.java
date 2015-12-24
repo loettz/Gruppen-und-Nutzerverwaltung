@@ -1,22 +1,29 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MAINMainPanel extends JPanel{
+public abstract class MAINMainPanel extends JPanel{
 
 	protected JPanel TitlePanel = new JPanel();
 	protected JPanel ButtonPanel = new JPanel();
 	protected JPanel ActionPanel = new JPanel();
 	protected JLabel TitleLabel = new JLabel();
 	
-	private GUIHelper guihelper = new GUIHelper();
+	protected Frame frame;
+	protected CardLayoutPanel cards;
+	
+	protected GUIHelper guihelper = new GUIHelper();
 	
 	public MAINMainPanel() {
 		createMAINMainPanel();
+		setPanels();
+		installListener();
+
 	}
 	
 	public void createMAINMainPanel() {
@@ -27,4 +34,7 @@ public class MAINMainPanel extends JPanel{
 		add(ActionPanel);
 		setVisible(true);
 }
+	public abstract void setPanels();
+	
+	public abstract void installListener();
 }

@@ -23,17 +23,11 @@ public class CreateUserPanel extends MAINMainPanel {
 	private JLabel givenNameLabel;
 	private JTextField givenName;
 
-	private Frame frame;
-	private CardLayoutPanel cards;
-	
-	private GUIHelper guihelper = new GUIHelper();
 	
 	public CreateUserPanel(Frame frame, CardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
-		setPanels();
-		installListener();
 	}
 	
 	public void setPanels() {

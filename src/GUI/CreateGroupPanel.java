@@ -19,18 +19,12 @@ public class CreateGroupPanel extends MAINMainPanel{
 	private JLabel groupSizeLabel;
 	private JTextField groupSize;
 	private JButton create;
-	
-	private Frame frame;
-	private CardLayoutPanel cards;
-	
-	private GUIHelper guihelper = new GUIHelper();
+
 	
 	public CreateGroupPanel(Frame frame, CardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
-		setPanels();
-		installListener();
 	}
 	public void setPanels() {
 		

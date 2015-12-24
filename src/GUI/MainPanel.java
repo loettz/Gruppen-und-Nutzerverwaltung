@@ -18,16 +18,10 @@ public class MainPanel extends MAINMainPanel{
 	private JButton createGroupButton;
 	private JButton showGroupsButton;
 	
-	private Frame frame;
-	private CardLayoutPanel cards;
-	private GUIHelper guihelper = new GUIHelper();
-	
 	public MainPanel(Frame frame, CardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
-		setPanels();
-		installListener();
 	
 	}
 	

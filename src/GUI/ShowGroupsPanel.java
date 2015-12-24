@@ -15,18 +15,12 @@ public class ShowGroupsPanel extends MAINMainPanel {
 	private JLabel showGroupsTitle;
 	private JButton save;
 	private JButton back;
-	
-	private Frame frame;
-	private CardLayoutPanel cards;
-	
-	private GUIHelper guihelper = new GUIHelper();
+
 	
 	public ShowGroupsPanel(Frame frame, CardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
-		setPanels();
-		installListener();
 	}
 	public void setPanels() {
 		
