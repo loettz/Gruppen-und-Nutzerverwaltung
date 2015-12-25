@@ -68,6 +68,35 @@ public class CreateUserPanel extends MAINMainPanel {
 		ActionPanel.add(birthDate);
 		
 	}
+	public boolean validateInput() {
+		if (validateTextField(givenName) && validateTextField(name)) {
+			return true;
+		
+		}
+		return false;
+	}
+	
+	public void saveDataAndResetPanel() {
+		try {
+			if (validateInput()) {
+				User user = new User();
+				user.setGivenName(givenName.getText());
+				user.setName(name.getText());
+				user.setAge(GER_DATE_FORMAT.parse(birthDate.getText()));
+				dbhandler.saveUser(user);
+				givenName.setText("");
+				name.setText("");
+				birthDate.setText("");
+				JOptionPane.showMessageDialog(CreateUserPanel.this, "Teilnehmer erstellt!");
+			}
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(CreateUserPanel.this, "Es gab einen Fehler bei der Eingabe!");
+		}
+		
+	}
 	public void installListener(){
 		back.addActionListener(new ActionListener() {
 			
@@ -79,21 +108,8 @@ public class CreateUserPanel extends MAINMainPanel {
 		});
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				saveDataAndResetPanel();
 				
-				try {
-					User user = new User();
-					user.setGivenName(givenName.getText());
-					user.setName(name.getText());
-					user.setAge(GER_DATE_FORMAT.parse(birthDate.getText()));
-					dbhandler.saveUser(user);
-					givenName.setText("");
-					name.setText("");
-					birthDate.setText("");
-					JOptionPane.showMessageDialog(CreateUserPanel.this, "Teilnehmer erstellt!");
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		});
 	

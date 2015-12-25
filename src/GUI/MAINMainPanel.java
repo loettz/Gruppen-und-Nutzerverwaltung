@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import diesisteinprojekt.DBHandler;
 
@@ -41,4 +43,13 @@ public abstract class MAINMainPanel extends JPanel{
 	public abstract void setPanels();
 	
 	public abstract void installListener();
+	
+	public boolean validateTextField(JTextField text) {
+		if (text.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Es gab einen Fehler bei der Eingabe!");
+			return false;
+			
+		}
+		return true;
+	}
 }
