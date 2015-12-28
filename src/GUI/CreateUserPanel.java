@@ -52,6 +52,7 @@ public class CreateUserPanel extends MAINMainPanel {
 		
 		ActionPanel.setLayout(new GridLayout(3, 3));
 		
+	
 		nameLabel = guihelper.setLabel("Name:", 14);
 		name = guihelper.setTextField();
 		givenNameLabel = guihelper.setLabel("Vorname:", 14);
@@ -59,11 +60,10 @@ public class CreateUserPanel extends MAINMainPanel {
 		birthDateLabel = guihelper.setLabel("Geburtsdatum", 14);
 		birthDate = guihelper.setTextField();
 		
-		
+		ActionPanel.add(givenNameLabel);
+		ActionPanel.add(givenName);
 		ActionPanel.add(nameLabel);
 		ActionPanel.add(name);
-		ActionPanel.add(givenNameLabel);
-		ActionPanel.add(givenName);	
 		ActionPanel.add(birthDateLabel);
 		ActionPanel.add(birthDate);
 		

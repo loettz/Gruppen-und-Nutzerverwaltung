@@ -33,5 +33,9 @@ public class DBHandler {
 	
 		
 	}
+	
+	public void saveGroup(Group group) {
+		
+	}
 
 }
