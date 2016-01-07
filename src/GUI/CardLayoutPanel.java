@@ -10,7 +10,7 @@ public class CardLayoutPanel extends JPanel{
 	JPanel mainP = new MainPanel(frame, this);
 	JPanel createUserP = new CreateUserPanel(frame, this);
 	JPanel createGroupP = new CreateGroupPanel(frame, this);
-	JPanel showGroupsP = new ShowGroupsPanel(frame, this);
+	JPanel showGroupsP = new EditGroupsPanel(frame, this);
 	
 	public CardLayoutPanel() {
 		cards();

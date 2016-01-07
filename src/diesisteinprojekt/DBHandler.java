@@ -14,10 +14,31 @@ public class DBHandler {
 	
 	private static final DateFormat MYSQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
+	public Connection connect() {
+		Connection con = null;
+	    String url = "jdbc:mysql://localhost/";
+	    String db = "groupstuffs";
+	    String driver = "com.mysql.jdbc.Driver";
+	    String user = "root";
+	    String pass = "";
+	    try {
+	        Class.forName(driver);
+	        con = DriverManager.getConnection(url + db, user, pass);
+	        if (con == null) {
+	            System.out.println("Connection cannot be established");
+	        }
+	        return con;
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    return null;
+	}
+
+	
 	public void saveUser(User user) {
 		Connection myConn = null;
 		try {
-			myConn = DriverManager.getConnection("jdbc:mysql://localhost/groupstuffs", "root", "");
+			myConn = connect();
 			Statement myStmt = myConn.createStatement();
 			String sql = "insert into person (firstname, lastname, birthdate, groupName"
 					+ ") values ('" + user.getGivenName() + "', '" + user.getName() + "', '" + MYSQL_DATE_FORMAT.format(user.getAge())  +  "', '"+ "" +"')"; 
@@ -40,7 +61,7 @@ public class DBHandler {
 	public void saveGroup(Group group) {
 		Connection myConn = null;
 		try {
-			myConn = DriverManager.getConnection("jdbc:mysql://localhost/groupstuffs", "root", "");
+			myConn = connect();
 			Statement myStmt = myConn.createStatement();
 			String saveGroupInDB = "insert into groups (name, groupSize"
 	                   +") values ('" + group.getName() + "," + group.getSize() + "')";
@@ -63,37 +84,31 @@ public class DBHandler {
 		Connection myConn = null;
 		PreparedStatement stmtSaveGroup = null;
 		PreparedStatement stmtGetUsers = null;
-		PreparedStatement stmtUserHasGroup = null;
+		//PreparedStatement stmtUserHasGroup = null;
 		ResultSet rs = null;
+		
 		ArrayList<User> members = new ArrayList<User>();
 		try {
-			myConn = DriverManager.getConnection("jdbc:mysql://localhost/groupstuffs", "root", "");
+			myConn = connect();
 			String saveGroupInDB = "insert into groups (name, groupSize"
 	                   +") values ('" + group.getName() + "', '" + group.getSize() + "')";
 			stmtSaveGroup = myConn.prepareStatement(saveGroupInDB);
 			String getUsers = "SELECT * FROM person where groupName =  ''";
 			stmtGetUsers = myConn.prepareStatement(getUsers);
 			rs = stmtGetUsers.executeQuery();
-			
-			while (group.getGroupList() == null || group.getSize() > group.getGroupList().size()) {
-				rs.next();	
-				User user = new User();
-				user.setGivenName(rs.getString("firstname"));
-				user.setName(rs.getString("lastname"));
-				user.setAge(rs.getDate("birthdate"));
-				//ArrayList<User> members = new ArrayList<User>();
-				members.add(user);
-				String userHasGroup = "UPDATE person SET groupName = '" + group.getName() +"' WHERE firstname = '" + user.getGivenName() +"'";
-				stmtUserHasGroup = myConn.prepareStatement(userHasGroup);
-				stmtUserHasGroup.execute();	
-						
-
-						
-
-						//rs.next();
+			rs.first();
+			if (group.getGroupList() == null) {
+				addUserToGroup(members, rs, group);
+				
 			}
-			group.setGroupList(members);
-			stmtSaveGroup.execute();
+				while (group.getSize() > group.getGroupList().size() && rs.next()) {
+					addUserToGroup(members, rs, group);
+
+				}
+			
+				
+				//group.setGroupList(members);
+			stmtSaveGroup.executeUpdate();
 			
 			//myStmt.execute(sql);
 		} catch (SQLException e) {
@@ -104,7 +119,7 @@ public class DBHandler {
 				rs.close();
 				stmtSaveGroup.close();
 				stmtGetUsers.close();
-				stmtUserHasGroup.close();
+				//stmtUserHasGroup.close();
 				myConn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -114,5 +129,28 @@ public class DBHandler {
 	}
 	
 	}
-
+	public void addUserToGroup(ArrayList<User> members, ResultSet rs, Group group) {
+		Connection myConn = null;
+		PreparedStatement stmtUserHasGroup = null;
+		
+		
+		try {
+			myConn = connect();
+			User user = new User();
+			user.setGivenName(rs.getString("firstname"));
+			user.setName(rs.getString("lastname"));
+			user.setAge(rs.getDate("birthdate"));
+			//ArrayList<User> members = new ArrayList<User>();
+			members.add(user);
+			String userHasGroup = "UPDATE person SET groupName = '" + group.getName() +"' WHERE firstname = '" + user.getGivenName() +"'";
+			stmtUserHasGroup = myConn.prepareStatement(userHasGroup);
+			stmtUserHasGroup.execute();
+			group.setGroupList(members);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+	}
 }
