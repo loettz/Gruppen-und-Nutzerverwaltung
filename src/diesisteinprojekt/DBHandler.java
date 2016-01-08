@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 public class DBHandler {
 	
 	private static final DateFormat MYSQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,28 +62,6 @@ public class DBHandler {
 	
 	public void saveGroup(Group group) {
 		Connection myConn = null;
-		try {
-			myConn = connect();
-			Statement myStmt = myConn.createStatement();
-			String saveGroupInDB = "insert into groups (name, groupSize"
-	                   +") values ('" + group.getName() + "," + group.getSize() + "')";
-			myStmt.execute(saveGroupInDB);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				myConn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	
-	public void checkUsers(Group group) {
-		Connection myConn = null;
 		PreparedStatement stmtSaveGroup = null;
 		PreparedStatement stmtGetUsers = null;
 		//PreparedStatement stmtUserHasGroup = null;
@@ -106,11 +86,9 @@ public class DBHandler {
 
 				}
 			
-				
 				//group.setGroupList(members);
 			stmtSaveGroup.executeUpdate();
-			
-			//myStmt.execute(sql);
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,5 +130,46 @@ public class DBHandler {
 		}
 		
 	
+	}
+	
+	public void getGroups(DefaultMutableTreeNode top) {
+		Connection myConn = null;
+		PreparedStatement stmtGetGroups = null;
+		ResultSet rs = null;
+		
+	
+		try {
+			myConn = connect();
+			
+			String getUsers = "SELECT * FROM groups";
+			stmtGetGroups = myConn.prepareStatement(getUsers);
+			rs = stmtGetGroups.executeQuery();
+			rs.first();
+			while (rs.next()) { 
+				createNode(rs, top);
+				
+			}
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	}
+	}
+	
+	public void createNode(ResultSet rs, DefaultMutableTreeNode top) {
+		Group group = new Group();
+		try {
+			group.setName(rs.getString("name"));
+			group.setSize(rs.getInt("groupSize"));
+			DefaultMutableTreeNode groupNode = new DefaultMutableTreeNode(group.getName());
+			
+			
+			top.add(groupNode);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

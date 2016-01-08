@@ -66,7 +66,7 @@ public class CreateGroupPanel extends MAINMainPanel{
 			Group group = new Group();
 			group.setName(groupName.getText());
 			group.setSize(Integer.parseInt(groupSize));
-			dbhandler.checkUsers(group);
+			dbhandler.saveGroup(group);
 			groupName.setText("");
 			groupSizeLabel.setText("");
 			JOptionPane.showMessageDialog(CreateGroupPanel.this, "Gruppe erstellt!");
