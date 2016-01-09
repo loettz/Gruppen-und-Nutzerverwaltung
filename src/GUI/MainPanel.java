@@ -31,7 +31,7 @@ public class MainPanel extends MAINMainPanel{
 		TitlePanel.add(menuTitle);
 		createUserButton = guihelper.setButton("Teilnehmer erstellen");
 		createGroupButton = guihelper.setButton("Gruppe erstellen");
-		showGroupsButton = guihelper.setButton("Gruppen anzeigen");
+		showGroupsButton = guihelper.setButton("Gruppen bearbeiten");
 		ButtonPanel.add(createUserButton);
 		ButtonPanel.add(createGroupButton);
 		ButtonPanel.add(showGroupsButton);

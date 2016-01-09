@@ -19,7 +19,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class EditGroupsPanel extends MAINMainPanel {
 	
 	private JLabel editGroupsTitle;
-	private JButton save;
 	private JButton back;
 	private JTree tree;
 
@@ -35,9 +34,7 @@ public class EditGroupsPanel extends MAINMainPanel {
 		
 		editGroupsTitle = guihelper.setLabel("Gruppen bearbeiten", 36);
 		TitlePanel.add(editGroupsTitle);
-		save = guihelper.setButton("Speichern");
 		back = guihelper.setButton("Zurück ins Menü");
-		ButtonPanel.add(save);
 		ButtonPanel.add(back);
 		DefaultMutableTreeNode top =
 		        new DefaultMutableTreeNode("Gruppen");

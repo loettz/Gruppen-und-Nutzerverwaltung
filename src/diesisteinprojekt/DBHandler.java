@@ -136,25 +136,43 @@ public class DBHandler {
 		Connection myConn = null;
 		PreparedStatement stmtGetGroups = null;
 		ResultSet rs = null;
-		
-	
+
 		try {
 			myConn = connect();
-			
-			String getUsers = "SELECT * FROM groups";
-			stmtGetGroups = myConn.prepareStatement(getUsers);
+			String getGroups = "SELECT * FROM groups";
+			stmtGetGroups = myConn.prepareStatement(getGroups);
 			rs = stmtGetGroups.executeQuery();
-			rs.first();
+			//rs.first();
 			while (rs.next()) { 
-				createNode(rs, top);
-				
+				createNode(rs, top);	
 			}
-			
-		
+					
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 	}
+
+	public void getUsersFromGroup(String groupName, DefaultMutableTreeNode groupNode) {
+		Connection myConn = null;
+		PreparedStatement stmtGetUsersFromGroup = null;
+		ResultSet rs = null;
+		
+		try {
+			myConn = connect();
+			String getUsers = "SELECT * FROM person WHERE groupName =" + "'" + groupName + "'";
+			stmtGetUsersFromGroup = myConn.prepareStatement(getUsers);
+			rs = stmtGetUsersFromGroup.executeQuery();
+			
+			while (rs.next()) {
+				createUserNode(rs, groupNode);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+
 	}
 	
 	public void createNode(ResultSet rs, DefaultMutableTreeNode top) {
@@ -163,13 +181,25 @@ public class DBHandler {
 			group.setName(rs.getString("name"));
 			group.setSize(rs.getInt("groupSize"));
 			DefaultMutableTreeNode groupNode = new DefaultMutableTreeNode(group.getName());
-			
-			
 			top.add(groupNode);
+			getUsersFromGroup(group.getName(), groupNode);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	public void createUserNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
+		User user = new User();
+		try {
+			user.setGivenName(rs.getString("firstname"));
+			user.setName(rs.getString("lastname"));
+			DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() +" " + user.getName());
+			groupNode.add(userNode);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
