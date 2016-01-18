@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -57,19 +58,26 @@ public class CreateGroupPanel extends MAINMainPanel{
 		ActionPanel.add(groupName);
 		ActionPanel.add(groupSizeButton);
 		ActionPanel.add(groupSizeLabel);
-
-		
-		
+	
 	}
 	
 	public void saveDataAndResetPanel() {
-			Group group = new Group();
-			group.setName(groupName.getText());
-			group.setSize(Integer.parseInt(groupSize));
-			dbhandler.saveGroup(group);
-			groupName.setText("");
-			groupSizeLabel.setText("");
-			JOptionPane.showMessageDialog(CreateGroupPanel.this, "Gruppe erstellt!");
+		try {
+			if (validateTextField(groupName)) {
+					Group group = new Group();
+					group.setName(groupName.getText());
+					group.setSize(Integer.parseInt(groupSize));
+					dbhandler.saveGroup(group);
+					groupName.setText("");
+					groupSizeLabel.setText("");
+					JOptionPane.showMessageDialog(CreateGroupPanel.this, "Gruppe erstellt!");
+			}
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(CreateGroupPanel.this, "Es gab einen Fehler bei der Eingabe!");
+		}
 	}
 
 	public void installListener(){

@@ -60,6 +60,28 @@ public class DBHandler {
 		
 	}
 	
+	public ArrayList<String> getGroupNameList() {
+		ArrayList<String> groups = new ArrayList<String>();
+		Connection myConn = null;
+		PreparedStatement stmtGetGroups = null;
+		ResultSet rs = null;
+
+		try {
+			myConn = connect();
+			String getGroups = "SELECT * FROM groups";
+			stmtGetGroups = myConn.prepareStatement(getGroups);
+			rs = stmtGetGroups.executeQuery();
+			while (rs.next()) { 
+				groups.add(rs.getString("name"));
+			}
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return groups;
+	}
+	
 	public void saveGroup(Group group) {
 		Connection myConn = null;
 		PreparedStatement stmtSaveGroup = null;
@@ -132,6 +154,13 @@ public class DBHandler {
 	
 	}
 	
+	public void deleteUserFromGroup(String username){
+		Connection myConn = null;
+		PreparedStatement stmtUserFromGroup = null;
+		
+		String userFromGroup = "DELETE FROM person WHERE firstname";//username = first und lastname aus popupmenu label
+	}
+	
 	public void getGroups(DefaultMutableTreeNode top) {
 		Connection myConn = null;
 		PreparedStatement stmtGetGroups = null;
@@ -171,8 +200,6 @@ public class DBHandler {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			
-
 	}
 	
 	public void createNode(ResultSet rs, DefaultMutableTreeNode top) {

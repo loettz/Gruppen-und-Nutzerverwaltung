@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -36,8 +37,11 @@ public abstract class MAINMainPanel extends JPanel{
 		setLayout(new GridLayout(3, 1));
 		setPreferredSize(new Dimension(600, 600));
 		add(TitlePanel);
+		TitlePanel.setBackground(Color.white);
 		add(ButtonPanel);
+		ButtonPanel.setBackground(Color.white);
 		add(ActionPanel);
+		ActionPanel.setBackground(Color.white);
 		setVisible(true);
 }
 	public abstract void setPanels();
