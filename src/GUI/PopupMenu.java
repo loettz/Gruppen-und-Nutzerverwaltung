@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -20,7 +21,9 @@ public class PopupMenu extends JPopupMenu{
 	JMenuItem deleteGroup;
 	JMenuItem deleteUserFromGroup;
 	JMenuItem addUserToGroup;
+	JMenuItem bla;
 	String elementLabel;
+	String groupLabel;
 	DBHandler dbhandler = new DBHandler();
 	ArrayList<String> groups = new ArrayList<String>();
 	
@@ -30,16 +33,46 @@ public class PopupMenu extends JPopupMenu{
     	DefaultMutableTreeNode selectedElement 
     	=(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
     	elementLabel = selectedElement.getUserObject().toString();
+    	groupLabel = selectedElement.getParent().toString();
         deleteGroup = new JMenuItem("Gruppe '" + elementLabel + "' löschen ");
         deleteUserFromGroup = new JMenuItem("Teilnehmer '" + elementLabel + "' aus Gruppe entfernen");
         addUserToGroup = new JMenuItem("Teilnehmer zur Gruppe '" + elementLabel + "' hinzufügen");
+        bla = new JMenuItem("bla");
     	if (groups.contains(elementLabel)) {
     		add(deleteGroup);
     		add(addUserToGroup);
     	}
-    	else {
+    	else{
     		add(deleteUserFromGroup);
+    		
     	}
 
+    	popupListener(tree, selectedElement);
     }
-}
+
+
+    
+    public void popupListener(final JTree tree, final DefaultMutableTreeNode selectedElement){
+		deleteUserFromGroup.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				 int dialogButton = JOptionPane.YES_NO_OPTION;
+	                JOptionPane.showConfirmDialog (null, "Teilnehmer" + elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
+
+	                if(dialogButton == JOptionPane.YES_OPTION){ 
+
+	                	dbhandler.deleteUserFromGroup(elementLabel, groupLabel);
+	                	selectedElement.removeFromParent();
+	                	DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+	                	model.reload();
+	                
+	               }
+			}
+		});
+		
+    }
+   }
+    
+			
+		

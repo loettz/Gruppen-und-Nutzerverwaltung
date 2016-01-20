@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 public class DBHandler {
 	
@@ -61,6 +62,7 @@ public class DBHandler {
 	}
 	
 	public ArrayList<String> getGroupNameList() {
+		// creates List of Groupnames
 		ArrayList<String> groups = new ArrayList<String>();
 		Connection myConn = null;
 		PreparedStatement stmtGetGroups = null;
@@ -130,9 +132,9 @@ public class DBHandler {
 	
 	}
 	public void addUserToGroup(ArrayList<User> members, ResultSet rs, Group group) {
+		// creates user obj and sets groupName in person in db
 		Connection myConn = null;
 		PreparedStatement stmtUserHasGroup = null;
-		
 		
 		try {
 			myConn = connect();
@@ -140,7 +142,7 @@ public class DBHandler {
 			user.setGivenName(rs.getString("firstname"));
 			user.setName(rs.getString("lastname"));
 			user.setAge(rs.getDate("birthdate"));
-			//ArrayList<User> members = new ArrayList<User>();
+			
 			members.add(user);
 			String userHasGroup = "UPDATE person SET groupName = '" + group.getName() +"' WHERE firstname = '" + user.getGivenName() +"'";
 			stmtUserHasGroup = myConn.prepareStatement(userHasGroup);
@@ -150,18 +152,42 @@ public class DBHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
 	}
 	
-	public void deleteUserFromGroup(String username){
+	public void deleteUserFromGroup(String username, String groupname) {
+		//resets the groupName in person and cuts the groupsize -1
 		Connection myConn = null;
 		PreparedStatement stmtUserFromGroup = null;
+		PreparedStatement stmtGroupSize = null;
+		PreparedStatement stmtResetGroupSize = null;
+		ResultSet rs = null;
+		String userFromGroup = "UPDATE person SET groupName = '' WHERE 'firstname' + ' ' + 'lastname' = '" + username + "' AND groupName = '" + groupname + "'";
+		String groupSize = "SELECT * from groups WHERE name = '" + groupname + "'";
 		
-		String userFromGroup = "DELETE FROM person WHERE firstname";//username = first und lastname aus popupmenu label
+		try {
+			myConn = connect();
+			stmtUserFromGroup = myConn.prepareStatement(userFromGroup);
+			stmtUserFromGroup.executeUpdate();
+			stmtGroupSize = myConn.prepareStatement(groupSize);
+			rs = stmtGroupSize.executeQuery();
+			rs.first();
+			int size = rs.getInt("groupSize");
+			size = size -1;
+			String resetGroupSize = "UPDATE groups SET groupSize = '" + size + "' WHERE name = '" + groupname + "'";
+			stmtResetGroupSize = myConn.prepareStatement(resetGroupSize);
+			stmtResetGroupSize.executeUpdate();
+			
+			
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 	}
 	
-	public void getGroups(DefaultMutableTreeNode top) {
+	
+	public void getGroupsAndCreateTreeNodes(DefaultMutableTreeNode top) {
+		// gets all Groups from DB and creates nodes and child nodes for JTree
 		Connection myConn = null;
 		PreparedStatement stmtGetGroups = null;
 		ResultSet rs = null;
@@ -175,6 +201,8 @@ public class DBHandler {
 			while (rs.next()) { 
 				createNode(rs, top);	
 			}
+			
+
 					
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -203,6 +231,7 @@ public class DBHandler {
 	}
 	
 	public void createNode(ResultSet rs, DefaultMutableTreeNode top) {
+		// creates All Nodes for JTree 
 		Group group = new Group();
 		try {
 			group.setName(rs.getString("name"));
@@ -210,6 +239,7 @@ public class DBHandler {
 			DefaultMutableTreeNode groupNode = new DefaultMutableTreeNode(group.getName());
 			top.add(groupNode);
 			getUsersFromGroup(group.getName(), groupNode);
+			//tree.expandPath(new TreePath(groupNode.getPath()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -217,16 +247,15 @@ public class DBHandler {
 		
 	}
 	public void createUserNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
+		//creates child nodes from group nodes
 		User user = new User();
 		try {
 			user.setGivenName(rs.getString("firstname"));
 			user.setName(rs.getString("lastname"));
-			DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() +" " + user.getName());
+			DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() +  " " + user.getName());
 			groupNode.add(userNode);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
+	}	
 }

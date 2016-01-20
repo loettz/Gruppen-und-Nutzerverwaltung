@@ -48,8 +48,10 @@ public class EditGroupsPanel extends MAINMainPanel {
 		        new DefaultMutableTreeNode("Gruppen");
 		//DefaultMutableTreeNode group = new DefaultMutableTreeNode("Gruppe1");
 		tree = new JTree(top);
-		dbhandler.getGroups(top);
+		dbhandler.getGroupsAndCreateTreeNodes(top);
 		//top.add(group);
+		tree.setRootVisible(false);
+		tree.expandPath(new TreePath(top.getPath()));
 		JScrollPane treeView = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		treeView.setPreferredSize(new Dimension(580, 180));
