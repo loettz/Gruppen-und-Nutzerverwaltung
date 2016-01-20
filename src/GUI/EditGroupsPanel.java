@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 
@@ -28,6 +29,7 @@ public class EditGroupsPanel extends MAINMainPanel {
 	
 	private JLabel editGroupsTitle;
 	private JButton back;
+	private JButton refreshTree;
 	private JTree tree;
 	private JPopupMenu popupMenu;
 
@@ -43,7 +45,9 @@ public class EditGroupsPanel extends MAINMainPanel {
 		editGroupsTitle = guihelper.setLabel("Gruppen bearbeiten", 36);
 		TitlePanel.add(editGroupsTitle);
 		back = guihelper.setButton("Zurück ins Menü");
+		refreshTree = guihelper.setButton("Anzeige aktualisieren");
 		ButtonPanel.add(back);
+		ButtonPanel.add(refreshTree);
 		DefaultMutableTreeNode top =
 		        new DefaultMutableTreeNode("Gruppen");
 		//DefaultMutableTreeNode group = new DefaultMutableTreeNode("Gruppe1");
@@ -75,6 +79,14 @@ public class EditGroupsPanel extends MAINMainPanel {
 				
 				CardLayout cl = (CardLayout)(cards.getLayout());
 				cl.show(cards, Frame.MAINPANEL);
+			}
+		});
+		refreshTree.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				tree.treeDidChange();//tree soll aktualisiert werden können(funktioniert nicht)
+            	
 			}
 		});
 	}

@@ -71,6 +71,32 @@ public class PopupMenu extends JPopupMenu{
 			}
 		});
 		
+		
+		deleteGroup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				JOptionPane.showConfirmDialog (null, "Gruppe" + elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
+
+                if(dialogButton == JOptionPane.YES_OPTION){ 
+                	dbhandler.deleteGroup(elementLabel);
+                	selectedElement.removeFromParent();
+                	DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+                	model.reload();
+                	
+                }
+
+			}
+		});
+		/*addUserToGroup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					ArrayList<String> users = dbhandler.getUserNameList();
+					Object[] options = users.toArray();
+					Object bla = JOptionPane.showInputDialog(null, "user", "user", JOptionPane.QUESTION_MESSAGE, null, options, users);
+                	DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+                	model.reload();
+                	
+                }	
+		});*/
     }
    }
     

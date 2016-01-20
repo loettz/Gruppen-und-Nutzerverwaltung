@@ -80,6 +80,13 @@ public class DBHandler {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return groups;
 	}
@@ -87,8 +94,8 @@ public class DBHandler {
 	public void saveGroup(Group group) {
 		Connection myConn = null;
 		PreparedStatement stmtSaveGroup = null;
-		PreparedStatement stmtGetUsers = null;
 		//PreparedStatement stmtUserHasGroup = null;
+		PreparedStatement stmtGetUsers = null;
 		ResultSet rs = null;
 		
 		ArrayList<User> members = new ArrayList<User>();
@@ -102,11 +109,11 @@ public class DBHandler {
 			rs = stmtGetUsers.executeQuery();
 			rs.first();
 			if (group.getGroupList() == null) {
-				addUserToGroup(members, rs, group);
+				addUserToGroup(members, group);
 				
 			}
 				while (group.getSize() > group.getGroupList().size() && rs.next()) {
-					addUserToGroup(members, rs, group);
+					addUserToGroup(members, group);
 
 				}
 			
@@ -120,29 +127,84 @@ public class DBHandler {
 			try {
 				rs.close();
 				stmtSaveGroup.close();
-				stmtGetUsers.close();
 				//stmtUserHasGroup.close();
 				myConn.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+		}
 
 	}
+		
+	public ResultSet getUsersWithNoGroup() {
+		Connection myConn = null;
+		PreparedStatement stmtGetUsers = null;
+		ResultSet rs = null;		
+		try {
+			myConn = connect();
+			String getUsers = "SELECT * FROM person where groupName =  ''";
+			stmtGetUsers = myConn.prepareStatement(getUsers);
+			rs = stmtGetUsers.executeQuery();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 	
 	}
-	public void addUserToGroup(ArrayList<User> members, ResultSet rs, Group group) {
+		return rs;
+	
+	}
+	
+	/*public ArrayList<String> getUserNameList() {
+		ArrayList<String> users = new ArrayList<String>();
+		Connection myConn = null;
+		ResultSet rs = null;
+		try {
+			myConn = connect();
+			rs = getUsersWithNoGroup();
+			while (rs.next()) {
+				users.add(rs.getString("firstname") + " " + rs.getString("lastname"));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return users;
+	}*/
+	public void addUserToGroup(ArrayList<User> members, Group group) {
 		// creates user obj and sets groupName in person in db
 		Connection myConn = null;
 		PreparedStatement stmtUserHasGroup = null;
+		PreparedStatement stmtGetUsers = null;
+		ResultSet rs = null;
 		
 		try {
 			myConn = connect();
 			User user = new User();
+			String getUsers = "SELECT * FROM person where groupName =  ''";
+			stmtGetUsers = myConn.prepareStatement(getUsers);
+			rs = stmtGetUsers.executeQuery();
 			user.setGivenName(rs.getString("firstname"));
 			user.setName(rs.getString("lastname"));
 			user.setAge(rs.getDate("birthdate"));
-			
 			members.add(user);
 			String userHasGroup = "UPDATE person SET groupName = '" + group.getName() +"' WHERE firstname = '" + user.getGivenName() +"'";
 			stmtUserHasGroup = myConn.prepareStatement(userHasGroup);
@@ -151,11 +213,46 @@ public class DBHandler {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteGroup(String groupname) {
+		//delete group in db and reset groupname of the affected users
+		Connection myConn = null;
+		PreparedStatement stmtDeleteGroup = null;
+		PreparedStatement stmtResetGroupnameInPerson = null;
+		String deleteGroup = "DELETE FROM groups WHERE name = '" + groupname + "'";
+		String ResetGroupnameInPerson = "UPDATE person SET groupName = '' WHERE groupName = '" + groupname + "'";
+		
+		try {
+			myConn = connect();
+			stmtDeleteGroup = myConn.prepareStatement(deleteGroup);
+			stmtDeleteGroup.execute();
+			stmtResetGroupnameInPerson = myConn.prepareStatement(ResetGroupnameInPerson);
+			stmtResetGroupnameInPerson.executeUpdate();
+			
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void deleteUserFromGroup(String username, String groupname) {
-		//resets the groupName in person and cuts the groupsize -1
+		//reset groupName of user in db and cut the groupsize -1
 		Connection myConn = null;
 		PreparedStatement stmtUserFromGroup = null;
 		PreparedStatement stmtGroupSize = null;
@@ -181,6 +278,13 @@ public class DBHandler {
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 			
 	}
@@ -207,6 +311,13 @@ public class DBHandler {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -227,6 +338,13 @@ public class DBHandler {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -243,7 +361,7 @@ public class DBHandler {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 	public void createUserNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
