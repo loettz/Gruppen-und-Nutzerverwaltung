@@ -10,6 +10,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import diesisteinprojekt.DBHandler;
@@ -44,14 +45,11 @@ public class PopupMenu extends JPopupMenu{
     	}
     	else{
     		add(deleteUserFromGroup);
-    		
     	}
 
     	popupListener(tree, selectedElement);
     }
-
-
-    
+   
     public void popupListener(final JTree tree, final DefaultMutableTreeNode selectedElement){
 		deleteUserFromGroup.addActionListener(new ActionListener() {
 			
@@ -84,19 +82,21 @@ public class PopupMenu extends JPopupMenu{
                 	model.reload();
                 	
                 }
-
 			}
 		});
-		/*addUserToGroup.addActionListener(new ActionListener() {
+		addUserToGroup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 					ArrayList<String> users = dbhandler.getUserNameList();
 					Object[] options = users.toArray();
-					Object bla = JOptionPane.showInputDialog(null, "user", "user", JOptionPane.QUESTION_MESSAGE, null, options, users);
+					Object addUserDialog = JOptionPane.showInputDialog(null, "Teilnehmer auswählen", "Teilnehmer zur Gruppe hinzufügen", JOptionPane.QUESTION_MESSAGE, null, options, users);
+					String addedUser = addUserDialog.toString();
+					dbhandler.addUserToGroup(addedUser, elementLabel);
+					selectedElement.add(new DefaultMutableTreeNode(addedUser));
                 	DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
                 	model.reload();
                 	
                 }	
-		});*/
+		});
     }
    }
     

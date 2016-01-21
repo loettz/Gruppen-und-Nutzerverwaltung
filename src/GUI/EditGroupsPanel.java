@@ -85,7 +85,8 @@ public class EditGroupsPanel extends MAINMainPanel {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				tree.treeDidChange();//tree soll aktualisiert werden können(funktioniert nicht)
+				DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+				model.reload();//tree soll aktualisiert werden können(funktioniert nicht)
             	
 			}
 		});

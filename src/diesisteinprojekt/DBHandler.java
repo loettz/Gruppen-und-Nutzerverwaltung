@@ -109,11 +109,11 @@ public class DBHandler {
 			rs = stmtGetUsers.executeQuery();
 			rs.first();
 			if (group.getGroupList() == null) {
-				addUserToGroup(members, group);
+				addUserFromRsToGroup(members, group);
 				
 			}
 				while (group.getSize() > group.getGroupList().size() && rs.next()) {
-					addUserToGroup(members, group);
+					addUserFromRsToGroup(members, group);
 
 				}
 			
@@ -165,15 +165,20 @@ public class DBHandler {
 	
 	}
 	
-	/*public ArrayList<String> getUserNameList() {
+	public ArrayList<String> getUserNameList() {
 		ArrayList<String> users = new ArrayList<String>();
+		PreparedStatement stmtGetUsers = null;
 		Connection myConn = null;
 		ResultSet rs = null;
+		String user;
 		try {
 			myConn = connect();
-			rs = getUsersWithNoGroup();
+			String getUsers = "SELECT * FROM person where groupName =  ''";
+			stmtGetUsers = myConn.prepareStatement(getUsers);
+			rs = stmtGetUsers.executeQuery();
 			while (rs.next()) {
-				users.add(rs.getString("firstname") + " " + rs.getString("lastname"));
+				user = rs.getString("firstname") + " " + rs.getString("lastname");
+				users.add(user);
 			}
 
 		} catch (SQLException e) {
@@ -188,9 +193,47 @@ public class DBHandler {
 			}
 		}
 		return users;
-	}*/
-	public void addUserToGroup(ArrayList<User> members, Group group) {
-		// creates user obj and sets groupName in person in db
+	}
+	
+	public void addUserToGroup(String username, String groupname) {
+		// adds selected user to selected group
+		Connection myConn = null;
+		PreparedStatement stmtSetGroupName = null;
+		PreparedStatement stmtGroupSize = null;
+		PreparedStatement stmtSetGroupSize = null;
+		String[] parts = username.split(" ");
+		ResultSet rs = null;
+		
+		try {
+			myConn = connect();
+			String setGroupName = "UPDATE person SET groupName = '" + groupname + "' WHERE firstname = '" + parts[0].toString() + "' AND lastname = '" + parts[1].toString() + "'";
+			String groupSize = "SELECT * from groups WHERE name = '" + groupname + "'";
+			stmtGroupSize = myConn.prepareStatement(groupSize);
+			rs = stmtGroupSize.executeQuery();
+			rs.first();
+			int size = rs.getInt("groupSize");
+			size = size -1;
+			String setGroupSize = "UPDATE groups SET groupSize = '" + size + "' WHERE name = '" + groupname + "'";
+			stmtSetGroupName = myConn.prepareStatement(setGroupName);
+			stmtSetGroupSize = myConn.prepareStatement(setGroupSize);
+			stmtSetGroupName.executeUpdate();
+			stmtSetGroupSize.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void addUserFromRsToGroup(ArrayList<User> members, Group group) {
+		// creates user obj from rs and sets groupName in person in db
 		Connection myConn = null;
 		PreparedStatement stmtUserHasGroup = null;
 		PreparedStatement stmtGetUsers = null;
@@ -258,7 +301,8 @@ public class DBHandler {
 		PreparedStatement stmtGroupSize = null;
 		PreparedStatement stmtResetGroupSize = null;
 		ResultSet rs = null;
-		String userFromGroup = "UPDATE person SET groupName = '' WHERE 'firstname' + ' ' + 'lastname' = '" + username + "' AND groupName = '" + groupname + "'";
+		String[] parts = username.split(" ");
+		String userFromGroup = "UPDATE person SET groupName = '' WHERE firstname =  '" + parts[0].toString() + "' AND lastname = '" + parts[1].toString() + "' AND groupName = '" + groupname + "'";
 		String groupSize = "SELECT * from groups WHERE name = '" + groupname + "'";
 		
 		try {
