@@ -29,10 +29,8 @@ public class EditGroupsPanel extends MAINMainPanel {
 	
 	private JLabel editGroupsTitle;
 	private JButton back;
-	private JButton refreshTree;
 	private JTree tree;
-	private JPopupMenu popupMenu;
-
+	private PopupMenu menu;
 	
 	public EditGroupsPanel(Frame frame, CardLayoutPanel cards) {
 		super();
@@ -45,15 +43,11 @@ public class EditGroupsPanel extends MAINMainPanel {
 		editGroupsTitle = guihelper.setLabel("Gruppen bearbeiten", 36);
 		TitlePanel.add(editGroupsTitle);
 		back = guihelper.setButton("Zurück ins Menü");
-		refreshTree = guihelper.setButton("Anzeige aktualisieren");
 		ButtonPanel.add(back);
-		ButtonPanel.add(refreshTree);
 		DefaultMutableTreeNode top =
 		        new DefaultMutableTreeNode("Gruppen");
-		//DefaultMutableTreeNode group = new DefaultMutableTreeNode("Gruppe1");
 		tree = new JTree(top);
 		dbhandler.getGroupsAndCreateTreeNodes(top);
-		//top.add(group);
 		tree.setRootVisible(false);
 		tree.expandPath(new TreePath(top.getPath()));
 		JScrollPane treeView = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -63,12 +57,14 @@ public class EditGroupsPanel extends MAINMainPanel {
 		tree.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
-	
-					PopupMenu menu = new PopupMenu();
-					menu.setPopupMenu(tree);
-			        menu.show(e.getComponent(), e.getX(), e.getY());
-			    }
-			}
+					if (tree.getSelectionPath() != null) {
+						menu = new PopupMenu();
+						menu.setPopupMenu(tree);
+				        menu.show(e.getComponent(), e.getX(), e.getY());	
+					}
+					
+				}
+		    }	
 		});
 	}
 
@@ -79,15 +75,6 @@ public class EditGroupsPanel extends MAINMainPanel {
 				
 				CardLayout cl = (CardLayout)(cards.getLayout());
 				cl.show(cards, Frame.MAINPANEL);
-			}
-		});
-		refreshTree.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				
-				DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-				model.reload();//tree soll aktualisiert werden können(funktioniert nicht)
-            	
 			}
 		});
 	}

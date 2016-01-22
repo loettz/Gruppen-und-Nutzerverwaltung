@@ -28,10 +28,7 @@ public class CreateGroupPanel extends MAINMainPanel{
 	private JTextField groupName;
 	private JLabel groupSizeLabel;
 	private JButton groupSizeButton;
-	private JButton create;
 	private String groupSize;
-
-
 	
 	public CreateGroupPanel(Frame frame, CardLayoutPanel cards) {
 		super();
@@ -42,18 +39,15 @@ public class CreateGroupPanel extends MAINMainPanel{
 		
 		createGroupTitle = guihelper.setLabel("Gruppe erstellen", 36);
 		TitlePanel.add(createGroupTitle);
-		
 		save = guihelper.setButton("Speichern");
 		back = guihelper.setButton("Zurück ins Menü");
 		ButtonPanel.add(save);
 		ButtonPanel.add(back);
-		
 		ActionPanel.setLayout(new GridLayout(2, 2));
 		groupNameLabel = guihelper.setLabel("Gruppenname: ", 14);
 		groupName = guihelper.setTextField();
 		groupSizeLabel = guihelper.setLabel("", 14);
 		groupSizeButton = guihelper.setButton("Anzahl bestimmen");
-		create = guihelper.setButton("Gruppe erstellen");
 		ActionPanel.add(groupNameLabel);
 		ActionPanel.add(groupName);
 		ActionPanel.add(groupSizeButton);
@@ -104,11 +98,8 @@ public class CreateGroupPanel extends MAINMainPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				saveDataAndResetPanel();
 			}
-				
-			
 		});
-		
 	}
-
+	
 }
 	

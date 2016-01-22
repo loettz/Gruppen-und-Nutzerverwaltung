@@ -43,23 +43,17 @@ public class CreateUserPanel extends MAINMainPanel {
 		
 		createUserTitle = guihelper.setLabel("Teilnehmer erstellen", 36);
 		TitlePanel.add(createUserTitle);
-		
 		save = guihelper.setButton("Speichern");
 		back = guihelper.setButton("Zurück ins Menü");
-		
 		ButtonPanel.add(save);
 		ButtonPanel.add(back);
-		
 		ActionPanel.setLayout(new GridLayout(3, 3));
-		
-	
 		nameLabel = guihelper.setLabel("Name:", 14);
 		name = guihelper.setTextField();
 		givenNameLabel = guihelper.setLabel("Vorname:", 14);
 		givenName = guihelper.setTextField();
-		birthDateLabel = guihelper.setLabel("Geburtsdatum", 14);
+		birthDateLabel = guihelper.setLabel("Geburtsdatum:", 14);
 		birthDate = guihelper.setTextField();
-		
 		ActionPanel.add(givenNameLabel);
 		ActionPanel.add(givenName);
 		ActionPanel.add(nameLabel);
@@ -95,7 +89,6 @@ public class CreateUserPanel extends MAINMainPanel {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(CreateUserPanel.this, "Es gab einen Fehler bei der Eingabe!");
 		}
-		
 	}
 	public void installListener(){
 		back.addActionListener(new ActionListener() {

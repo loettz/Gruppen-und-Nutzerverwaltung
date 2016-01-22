@@ -22,7 +22,6 @@ public class PopupMenu extends JPopupMenu{
 	JMenuItem deleteGroup;
 	JMenuItem deleteUserFromGroup;
 	JMenuItem addUserToGroup;
-	JMenuItem bla;
 	String elementLabel;
 	String groupLabel;
 	DBHandler dbhandler = new DBHandler();
@@ -35,10 +34,9 @@ public class PopupMenu extends JPopupMenu{
     	=(DefaultMutableTreeNode)tree.getSelectionPath().getLastPathComponent();
     	elementLabel = selectedElement.getUserObject().toString();
     	groupLabel = selectedElement.getParent().toString();
-        deleteGroup = new JMenuItem("Gruppe '" + elementLabel + "' löschen ");
-        deleteUserFromGroup = new JMenuItem("Teilnehmer '" + elementLabel + "' aus Gruppe entfernen");
-        addUserToGroup = new JMenuItem("Teilnehmer zur Gruppe '" + elementLabel + "' hinzufügen");
-        bla = new JMenuItem("bla");
+        deleteGroup = new JMenuItem(elementLabel + " löschen");
+        deleteUserFromGroup = new JMenuItem(elementLabel + " aus " + groupLabel +" entfernen");
+        addUserToGroup = new JMenuItem("Teilnehmer zu " + elementLabel + " hinzufügen");
     	if (groups.contains(elementLabel)) {
     		add(deleteGroup);
     		add(addUserToGroup);
@@ -46,8 +44,10 @@ public class PopupMenu extends JPopupMenu{
     	else{
     		add(deleteUserFromGroup);
     	}
-
+    	
     	popupListener(tree, selectedElement);
+    	
+    	
     }
    
     public void popupListener(final JTree tree, final DefaultMutableTreeNode selectedElement){
@@ -56,7 +56,7 @@ public class PopupMenu extends JPopupMenu{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				 int dialogButton = JOptionPane.YES_NO_OPTION;
-	                JOptionPane.showConfirmDialog (null, "Teilnehmer" + elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
+	                JOptionPane.showConfirmDialog (null, elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
 
 	                if(dialogButton == JOptionPane.YES_OPTION){ 
 
@@ -69,11 +69,10 @@ public class PopupMenu extends JPopupMenu{
 			}
 		});
 		
-		
 		deleteGroup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int dialogButton = JOptionPane.YES_NO_OPTION;
-				JOptionPane.showConfirmDialog (null, "Gruppe" + elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
+				JOptionPane.showConfirmDialog (null, elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
 
                 if(dialogButton == JOptionPane.YES_OPTION){ 
                 	dbhandler.deleteGroup(elementLabel);

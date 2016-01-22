@@ -196,7 +196,7 @@ public class DBHandler {
 	}
 	
 	public void addUserToGroup(String username, String groupname) {
-		// adds selected user to selected group
+		// adds selected user to selected group, set groupname in person, count up groupsize in groups
 		Connection myConn = null;
 		PreparedStatement stmtSetGroupName = null;
 		PreparedStatement stmtGroupSize = null;
@@ -212,7 +212,7 @@ public class DBHandler {
 			rs = stmtGroupSize.executeQuery();
 			rs.first();
 			int size = rs.getInt("groupSize");
-			size = size -1;
+			size = size +1;
 			String setGroupSize = "UPDATE groups SET groupSize = '" + size + "' WHERE name = '" + groupname + "'";
 			stmtSetGroupName = myConn.prepareStatement(setGroupName);
 			stmtSetGroupSize = myConn.prepareStatement(setGroupSize);
@@ -245,6 +245,7 @@ public class DBHandler {
 			String getUsers = "SELECT * FROM person where groupName =  ''";
 			stmtGetUsers = myConn.prepareStatement(getUsers);
 			rs = stmtGetUsers.executeQuery();
+			rs.first();
 			user.setGivenName(rs.getString("firstname"));
 			user.setName(rs.getString("lastname"));
 			user.setAge(rs.getDate("birthdate"));
