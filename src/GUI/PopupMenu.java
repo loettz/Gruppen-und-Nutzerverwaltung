@@ -46,8 +46,6 @@ public class PopupMenu extends JPopupMenu{
     	}
     	
     	popupListener(tree, selectedElement);
-    	
-    	
     }
    
     public void popupListener(final JTree tree, final DefaultMutableTreeNode selectedElement){

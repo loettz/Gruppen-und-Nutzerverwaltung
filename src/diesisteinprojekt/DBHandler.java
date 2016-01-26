@@ -37,7 +37,6 @@ public class DBHandler {
 	    return null;
 	}
 
-	
 	public void saveUser(User user) {
 		Connection myConn = null;
 		try {
@@ -110,7 +109,6 @@ public class DBHandler {
 			rs.first();
 			if (group.getGroupList() == null) {
 				addUserFromRsToGroup(members, group);
-				
 			}
 				while (group.getSize() > group.getGroupList().size() && rs.next()) {
 					addUserFromRsToGroup(members, group);
@@ -132,10 +130,8 @@ public class DBHandler {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}	
 		}
-
 	}
 		
 	public ResultSet getUsersWithNoGroup() {
@@ -158,8 +154,6 @@ public class DBHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-	
 	}
 		return rs;
 	
@@ -330,10 +324,8 @@ public class DBHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-			
+		}	
 	}
-	
 	
 	public void getGroupsAndCreateTreeNodes(DefaultMutableTreeNode top) {
 		// gets all Groups from DB and creates nodes and child nodes for JTree
@@ -350,9 +342,7 @@ public class DBHandler {
 			while (rs.next()) { 
 				createNode(rs, top);	
 			}
-			
-
-					
+							
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -367,6 +357,7 @@ public class DBHandler {
 	}
 
 	public void getUsersFromGroup(String groupName, DefaultMutableTreeNode groupNode) {
+		//get users from a group for creating the child nodes
 		Connection myConn = null;
 		PreparedStatement stmtGetUsersFromGroup = null;
 		ResultSet rs = null;
@@ -394,7 +385,7 @@ public class DBHandler {
 	}
 	
 	public void createNode(ResultSet rs, DefaultMutableTreeNode top) {
-		// creates All Nodes for JTree 
+		// creates All Nodes for JTree based on groups in DB
 		Group group = new Group();
 		try {
 			group.setName(rs.getString("name"));
@@ -410,7 +401,7 @@ public class DBHandler {
 		
 	}
 	public void createUserNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
-		//creates child nodes from group nodes
+		//gets users from group and creates child nodes
 		User user = new User();
 		try {
 			user.setGivenName(rs.getString("firstname"));
