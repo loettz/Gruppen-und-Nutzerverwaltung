@@ -13,6 +13,10 @@ public class Frame extends JFrame{
 	public final static String CREATEUSER = "Card with createuser";
 	public final static String CREATEGROUP = "Card with creategroup";
 	public final static String SHOWGROUPS = "Card with showgroups";
+	public final static String EMPTY = "Empty card";
+	public final static String CREATEGROUPRANDOM = "create random group";
+	public final static String GROUPSAVED = "group is saved";
+	
 	
 	
 	public JPanel cards = new CardLayoutPanel();

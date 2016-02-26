@@ -1,6 +1,7 @@
 package GUI;
 
 
+import java.awt.Color;
 //import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,6 +19,8 @@ import javax.swing.JTextField;
 
 public class GUIHelper {
 	public JFrame frame;
+	public Color customColor = new Color(15,151,60);
+	public Color colorZwei = new Color(8,97,70);
 	public GUIHelper() {
 		this.frame = new JFrame();
 	}
@@ -42,6 +45,7 @@ public class GUIHelper {
 	 */
 	public JPanel setPanel() {
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.white);
 		return panel;
 	}
 	/**
@@ -69,6 +73,8 @@ public class GUIHelper {
 	 */
 	public JButton setButton(String buttonText) {
 		JButton button = new JButton(buttonText);
+		button.setFont(new Font("Source Sans Pro", Font.BOLD, 14));
+		button.setForeground(colorZwei);
 		return button;
 	}
 	
@@ -91,7 +97,8 @@ public class GUIHelper {
 	 */
 	public JLabel setLabel(String labelText, int size) {
 		JLabel label = new JLabel(labelText);
-		label.setFont(new Font("Arial", Font.PLAIN, size));
+		label.setFont(new Font("Source Sans Pro", Font.BOLD, size));
+		label.setForeground(customColor);
 		return label;
 	}
 	

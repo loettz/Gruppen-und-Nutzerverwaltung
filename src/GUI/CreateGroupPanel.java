@@ -88,7 +88,7 @@ public class CreateGroupPanel extends MAINMainPanel{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				groupSize = (String) JOptionPane.showInputDialog(null, "Die Anzahl der Teilnehmer kann hier bestimmt werden.", "Gruppengröße auswählen",
-				        JOptionPane.QUESTION_MESSAGE, null, new String[] {"5", "6", "7", "8"}, "");
+				        JOptionPane.QUESTION_MESSAGE, null, new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8"}, "");
 				groupSizeLabel.setText(groupSize);
 			}
 		});
