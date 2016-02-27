@@ -29,12 +29,12 @@ public class MainPanel extends MAINMainPanel{
 		
 		menuTitle = guihelper.setLabel("HAUPTMENÜ", 36);
 		TitlePanel.add(menuTitle);
-		createUserButton = guihelper.setButton("Teilnehmer erstellen");
+		createUserButton = guihelper.setButton("Teilnehmerverwaltung");
 		createGroupButton = guihelper.setButton("Gruppenverwaltung");
-		showGroupsButton = guihelper.setButton("Gruppen bearbeiten");
+		//showGroupsButton = guihelper.setButton("Gruppen bearbeiten");
 		ButtonPanel.add(createUserButton);
 		ButtonPanel.add(createGroupButton);
-		ButtonPanel.add(showGroupsButton);
+		//ButtonPanel.add(showGroupsButton);
 		
 	}
 		
@@ -56,12 +56,5 @@ public class MainPanel extends MAINMainPanel{
 					cl.show(cards, Frame.CREATEGROUP);
 				}
 			});
-			showGroupsButton.addActionListener(new ActionListener() {
-		
-				public void actionPerformed(ActionEvent arg0) {
-			
-					CardLayout cl = (CardLayout)(cards.getLayout());
-					cl.show(cards, Frame.SHOWGROUPS);
-			}
-			});}
+		}
 }

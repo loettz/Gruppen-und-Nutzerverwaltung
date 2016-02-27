@@ -369,7 +369,7 @@ public class DBHandler {
 			rs = stmtGetUsersFromGroup.executeQuery();
 			
 			while (rs.next()) {
-				createUserNode(rs, groupNode);
+				createChildNode(rs, groupNode);
 				
 			}
 		} catch (SQLException e) {
@@ -400,7 +400,7 @@ public class DBHandler {
 		} 
 		
 	}
-	public void createUserNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
+	public void createChildNode(ResultSet rs, DefaultMutableTreeNode groupNode) {
 		//gets users from group and creates child nodes
 		User user = new User();
 		try {
@@ -411,5 +411,107 @@ public class DBHandler {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	public void createAllUserNodes(DefaultMutableTreeNode top) {
+		//creates Treenodes for All Users in db
+		Connection myConn = null;
+		PreparedStatement stmtGetUsers = null;
+		ResultSet rs = null;
+		
+		try {
+			myConn = connect();
+			String getGroups = "SELECT * FROM person";
+			stmtGetUsers = myConn.prepareStatement(getGroups);
+			rs = stmtGetUsers.executeQuery();
+			//rs.first();
+			while (rs.next()) { 
+				User user = new User();
+				user.setGivenName(rs.getString("firstname"));
+				user.setName(rs.getString("lastname"));
+				DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() + " " + user.getName());
+				top.add(userNode);
+					
+			}
+							
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void createUserWithGroupNodes(DefaultMutableTreeNode top) {
+		//creates Treenodes for All Users that relate to a group
+		Connection myConn = null;
+		PreparedStatement stmtGetUsers = null;
+		ResultSet rs = null;
+		
+		try {
+			myConn = connect();
+			String getGroups = "SELECT * FROM person where groupName !=  ''";
+			stmtGetUsers = myConn.prepareStatement(getGroups);
+			rs = stmtGetUsers.executeQuery();
+			//rs.first();
+			while (rs.next()) { 
+				User user = new User();
+				user.setGivenName(rs.getString("firstname"));
+				user.setName(rs.getString("lastname"));
+				DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() + " " + user.getName());
+				top.add(userNode);
+					
+			}
+							
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void createUserWithoutGroupNodes(DefaultMutableTreeNode top) {
+		//creates Treenodes for All Users that have no group
+		Connection myConn = null;
+		PreparedStatement stmtGetUsers = null;
+		ResultSet rs = null;
+		
+		try {
+			myConn = connect();
+			String getGroups = "SELECT * FROM person where groupName =  ''";
+			stmtGetUsers = myConn.prepareStatement(getGroups);
+			rs = stmtGetUsers.executeQuery();
+			//rs.first();
+			while (rs.next()) { 
+				User user = new User();
+				user.setGivenName(rs.getString("firstname"));
+				user.setName(rs.getString("lastname"));
+				DefaultMutableTreeNode userNode = new DefaultMutableTreeNode(user.getGivenName() + " " + user.getName());
+				top.add(userNode);
+					
+			}
+							
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

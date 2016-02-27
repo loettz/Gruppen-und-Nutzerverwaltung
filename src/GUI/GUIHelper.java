@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 
 //import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -73,7 +74,7 @@ public class GUIHelper {
 	 */
 	public JButton setButton(String buttonText) {
 		JButton button = new JButton(buttonText);
-		button.setFont(new Font("Source Sans Pro", Font.BOLD, 14));
+		button.setFont(new Font("Source Sans Pro", Font.PLAIN, 14));
 		button.setForeground(colorZwei);
 		return button;
 	}
@@ -100,6 +101,14 @@ public class GUIHelper {
 		label.setFont(new Font("Source Sans Pro", Font.BOLD, size));
 		label.setForeground(customColor);
 		return label;
+	}
+	
+	public JCheckBox setCheckBox(String label) {
+		JCheckBox cb = new JCheckBox(label);
+		cb.setFont(new Font("Source Sans Pro", Font.PLAIN, 14));
+		cb.setForeground(customColor);
+		cb.setBackground(Color.white);
+		return cb;
 	}
 	
 	public void endFrame() {

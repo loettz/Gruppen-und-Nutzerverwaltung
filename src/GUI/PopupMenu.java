@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class PopupMenu extends JPopupMenu{
 	JMenuItem addUserToGroup;
 	String elementLabel;
 	String groupLabel;
+	public Font font = new Font("Source Sans Pro", Font.PLAIN, 12);
 	DBHandler dbhandler = new DBHandler();
 	ArrayList<String> groups = new ArrayList<String>();
 	
@@ -35,8 +37,11 @@ public class PopupMenu extends JPopupMenu{
     	elementLabel = selectedElement.getUserObject().toString();
     	groupLabel = selectedElement.getParent().toString();
         deleteGroup = new JMenuItem(elementLabel + " löschen");
+        deleteGroup.setFont(font);
         deleteUserFromGroup = new JMenuItem(elementLabel + " aus " + groupLabel +" entfernen");
+        deleteUserFromGroup.setFont(font);
         addUserToGroup = new JMenuItem("Teilnehmer zu " + elementLabel + " hinzufügen");
+        addUserToGroup.setFont(font);
     	if (groups.contains(elementLabel)) {
     		add(deleteGroup);
     		add(addUserToGroup);

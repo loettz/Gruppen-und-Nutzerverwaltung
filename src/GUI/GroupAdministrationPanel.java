@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +24,6 @@ public class GroupAdministrationPanel extends MAINMainPanel{
 	private JLabel groupAdministrationTitle;
 	protected EditGroupsTreePanel treePanel;
 	private JButton createGroupRandom;
-	private JButton createGroupManual;
 	private JButton back;
 	private JPanel menuPanel;
 	protected CLGroupAdministrationPanel clCards;
@@ -40,15 +41,13 @@ public class GroupAdministrationPanel extends MAINMainPanel{
 		groupAdministrationTitle = guihelper.setLabel("Gruppenverwaltung", 36);
 		createGroupRandom = guihelper.setButton("Gruppe erstellen");
 		createGroupRandom.setPreferredSize(new Dimension(200, 25));
-		//createGroupManual.setPreferredSize(new Dimension(200, 25));
 		back = guihelper.setButton("Zurück ins Menü");
 		back.setPreferredSize(new Dimension(200, 25));
 		TitlePanel.add(groupAdministrationTitle);
 		treePanel = new EditGroupsTreePanel();
 		menuPanel = guihelper.setPanel();
 		ButtonPanel.setLayout(new GridLayout(1, 2));
-		//tree = new EditGroupsTree();
-		
+
 		
 		menuPanel.add(createGroupRandom);
 		menuPanel.add(back);
@@ -58,6 +57,7 @@ public class GroupAdministrationPanel extends MAINMainPanel{
 		//CreateGroupRandomPanel bla = new CreateGroupRandomPanel();
 		clCards = new CLGroupAdministrationPanel();
 		ActionPanel.add(clCards);
+		//ActionPanel.setBorder(BorderFactory.createLineBorder(guihelper.colorZwei));
 		
 		
 		// TODO Auto-generated method stub
@@ -69,8 +69,10 @@ public class GroupAdministrationPanel extends MAINMainPanel{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				CardLayout cl = (CardLayout)(cards.getLayout());
-				cl.show(cards, Frame.MAINPANEL);
+				CardLayout clMain = (CardLayout)(cards.getLayout());
+				clMain.show(cards, Frame.MAINPANEL);
+				CardLayout cl = (CardLayout)(clCards.getLayout());
+				cl.show(clCards, Frame.EMPTY);
 			}
 		});
 		// TODO Auto-generated method stub

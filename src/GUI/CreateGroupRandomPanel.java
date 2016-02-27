@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,26 +27,31 @@ public class CreateGroupRandomPanel extends JPanel{
 	private JLabel groupSizeLabel;
 	private JButton groupSizeButton;
 	private String groupSize;
+	CLGroupAdministrationPanel clCards;
+
 	
-	public CreateGroupRandomPanel() {
+	public CreateGroupRandomPanel(CLGroupAdministrationPanel clCards) {
+		this.clCards = clCards;
 		setPanel();
 		installListener();
 	}
 	
 	public void setPanel() {
 		setPreferredSize(new Dimension(580, 180));
-		setLayout(new GridLayout(2, 2));
+		setLayout(new GridLayout(3, 2));
 		setBackground(Color.white);
 		save = guihelper.setButton("Speichern");
+		save.setPreferredSize(new Dimension(200, 25));
 		groupNameLabel = guihelper.setLabel("Gruppenname: ", 14);
 		groupName = guihelper.setTextField();
 		groupSizeLabel = guihelper.setLabel("", 14);
 		groupSizeButton = guihelper.setButton("Anzahl bestimmen");
+		groupSizeButton.setPreferredSize(new Dimension(200, 25));
 		add(groupNameLabel);
 		add(groupName);
 		add(groupSizeButton);
 		add(groupSizeLabel);
-		
+		add(save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE);
 	}
 	public boolean validateTextField(JTextField text) {
 		if (text.getText().equals("")) {
@@ -64,7 +70,9 @@ public class CreateGroupRandomPanel extends JPanel{
 					dbhandler.saveGroup(group);
 					groupName.setText("");
 					groupSizeLabel.setText("");
-					JOptionPane.showMessageDialog(CreateGroupRandomPanel.this, "Gruppe erstellt!");
+					//JOptionPane.showMessageDialog(CreateGroupRandomPanel.this, "Gruppe erstellt!");
+					CardLayout cl = (CardLayout)(clCards.getLayout());
+					cl.show(clCards, Frame.GROUPSAVED);
 			}
 		
 		} catch (Exception e) {
@@ -90,6 +98,7 @@ public class CreateGroupRandomPanel extends JPanel{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				saveDataAndResetPanel();
+
 			}
 		});
 	}

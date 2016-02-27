@@ -8,7 +8,7 @@ public class CardLayoutPanel extends JPanel{
 	private Frame frame;
 		
 	JPanel mainP = new MainPanel(frame, this);
-	JPanel createUserP = new CreateUserPanel(frame, this);
+	JPanel createUserP = new UserAdministrationPanel(frame, this);
 	JPanel createGroupP = new GroupAdministrationPanel(frame, this);
 	JPanel showGroupsP = new EditGroupsPanel(frame, this);
 	
