@@ -18,10 +18,11 @@ import javax.swing.tree.TreePath;
 import diesisteinprojekt.DBHandler;
 
 public class EditGroupsTreePanel extends JPanel{
+	//Panel with JTree that contains nodes for all groups and childnodes for users in the group
 	
 	protected DBHandler dbhandler = new DBHandler();
 	protected GUIHelper guihelper = new GUIHelper();
-	private PopupMenu menu;
+	private EditGroupsTreePopupMenu menu;
 	private JTree tree;
 	private JLabel editExistingGroups;
 	public Font font = new Font("Source Sans Pro", Font.PLAIN, 12);
@@ -51,19 +52,18 @@ public class EditGroupsTreePanel extends JPanel{
 		renderer.setTextSelectionColor(Color.BLACK);
 		treeView.setPreferredSize(new Dimension(290, 160));
 		
-		//treeView.add(tree);
 		add(editExistingGroups);
 		add(treeView);
-		//add(tree);
 		
 	}
 	
 	public void installListener() {
 		tree.addMouseListener(new MouseAdapter() {
+			//Popupmenu shows up when right mousebutton is clicked
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					if (tree.getSelectionPath() != null) {
-						menu = new PopupMenu();
+						menu = new EditGroupsTreePopupMenu();
 						menu.setPopupMenu(tree);
 				        menu.show(e.getComponent(), e.getX(), e.getY());	
 					}

@@ -10,7 +10,7 @@ public class CLGroupAdministrationPanel extends JPanel{
 	private Frame frame;
 	protected GUIHelper guihelper = new GUIHelper();
 	JPanel emptyPanel = new JPanel();
-	JPanel createGroup = new CreateGroupRandomPanel(this);
+	JPanel createGroup = new CreateGroupPanel(this);
 	JPanel groupSavedPanel = new JPanel();
 	JLabel saved = guihelper.setLabel("Gruppe gespeichert!", 24);
 	

@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,14 +16,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import diesisteinprojekt.DBHandler;
 import diesisteinprojekt.User;
 
-public class CreateUserPanel extends MAINMainPanel {
+public class CreateUserPanel extends JPanel{
 
-	private JLabel createUserTitle;
-	
+	protected DBHandler dbhandler = new DBHandler();
+	protected GUIHelper guihelper = new GUIHelper();
 	private JButton save;
-	private JButton back;
+
 	
 	private JLabel nameLabel;
 	private JTextField name;
@@ -30,37 +32,45 @@ public class CreateUserPanel extends MAINMainPanel {
 	private JTextField givenName;
 	private JLabel birthDateLabel;
 	private JTextField birthDate;
+	CLUserAdministrationPanel clCards;
 
 	private static final DateFormat GER_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 	
-	public CreateUserPanel(Frame frame, CardLayoutPanel cards) {
-		super();
-		this.frame = frame;
-		this.cards = cards;
+	public CreateUserPanel(CLUserAdministrationPanel clCards) {
+		this.clCards = clCards;
+		setPanel();
+		installListener();
 	}
 	
-	public void setPanels() {
+	public void setPanel() {
 		
-		createUserTitle = guihelper.setLabel("Teilnehmer erstellen", 36);
-		TitlePanel.add(createUserTitle);
+		setPreferredSize(new Dimension(580, 180));
+		setLayout(new GridLayout(4, 3));
+		setBackground(Color.white);
 		save = guihelper.setButton("Speichern");
-		back = guihelper.setButton("Zurück ins Menü");
-		ButtonPanel.add(save);
-		ButtonPanel.add(back);
-		ActionPanel.setLayout(new GridLayout(3, 3));
 		nameLabel = guihelper.setLabel("Name:", 14);
 		name = guihelper.setTextField();
 		givenNameLabel = guihelper.setLabel("Vorname:", 14);
 		givenName = guihelper.setTextField();
 		birthDateLabel = guihelper.setLabel("Geburtsdatum:", 14);
 		birthDate = guihelper.setTextField();
-		ActionPanel.add(givenNameLabel);
-		ActionPanel.add(givenName);
-		ActionPanel.add(nameLabel);
-		ActionPanel.add(name);
-		ActionPanel.add(birthDateLabel);
-		ActionPanel.add(birthDate);
+		add(givenNameLabel);
+		add(givenName);
+		add(nameLabel);
+		add(name);
+		add(birthDateLabel);
+		add(birthDate);
+		add(save);
 		
+	}
+	
+	public boolean validateTextField(JTextField text) {
+		if (text.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Es gab einen Fehler bei der Eingabe!");
+			return false;
+			
+		}
+		return true;
 	}
 	public boolean validateInput() {
 		if (validateTextField(givenName) && validateTextField(name)) {
@@ -81,7 +91,8 @@ public class CreateUserPanel extends MAINMainPanel {
 				givenName.setText("");
 				name.setText("");
 				birthDate.setText("");
-				JOptionPane.showMessageDialog(CreateUserPanel.this, "Teilnehmer erstellt!");
+				CardLayout cl = (CardLayout)(clCards.getLayout());
+				cl.show(clCards, Frame.USERSAVED);
 			}
 			
 		} catch (ParseException e) {
@@ -91,14 +102,8 @@ public class CreateUserPanel extends MAINMainPanel {
 		}
 	}
 	public void installListener(){
-		back.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				
-				CardLayout cl = (CardLayout)(cards.getLayout());
-				cl.show(cards, Frame.MAINPANEL);
-			}
-		});
+		
+		
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveDataAndResetPanel();

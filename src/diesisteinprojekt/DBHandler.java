@@ -289,6 +289,56 @@ public class DBHandler {
 		}
 	}
 	
+	public void deleteUser(String username) {
+		//checks if user has group (if yes set groupsize -1), delete user from db
+		Connection myConn = null;
+		PreparedStatement stmtUser = null;
+		PreparedStatement stmtGroupSize = null;
+		PreparedStatement stmtResetGroupSize = null;
+		PreparedStatement stmtDeleteUser = null;
+		ResultSet rsUser = null;
+		ResultSet rsGroupSize = null;
+		String[] parts = username.split(" ");
+		String user = "SELECT * from person WHERE firstname = '" + parts[0].toString() + "' AND lastname = '" + parts[1].toString() + "'";
+		String deleteUser = "DELETE FROM person WHERE firstname = '" + parts[0].toString() + "' AND lastname = '" + parts[1].toString() + "'";
+		
+		try {
+			myConn = connect();
+			stmtUser = myConn.prepareStatement(user);
+			rsUser = stmtUser.executeQuery();
+			rsUser.first();
+			String groupname = rsUser.getString("groupName");
+			if (groupname != "") {
+				String groupSize = "SELECT * from groups WHERE name = '" + groupname + "'";
+				stmtGroupSize = myConn.prepareStatement(groupSize);
+				rsGroupSize = stmtGroupSize.executeQuery();
+				if (rsGroupSize.next()) {
+					int size = rsGroupSize.getInt("groupSize");
+					size = size -1;
+					String resetGroupSize = "UPDATE groups SET groupSize = '" + size + "' WHERE name = '" + groupname + "'";
+					stmtResetGroupSize = myConn.prepareStatement(resetGroupSize);
+					stmtResetGroupSize.executeUpdate();
+				}
+				
+			}
+			stmtDeleteUser = myConn.prepareStatement(deleteUser);
+			stmtDeleteUser.execute();
+			
+			
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				myConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		
+	}
+	
 	public void deleteUserFromGroup(String username, String groupname) {
 		//reset groupName of user in db and cut the groupsize -1
 		Connection myConn = null;

@@ -1,60 +1,66 @@
 package GUI;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
+import diesisteinprojekt.DBHandler;
 import diesisteinprojekt.Group;
-import diesisteinprojekt.User;
 
-public class CreateGroupPanel extends MAINMainPanel{
+public class CreateGroupPanel extends JPanel{
 	
-	private JLabel createGroupTitle;
+	protected DBHandler dbhandler = new DBHandler();
+	protected GUIHelper guihelper = new GUIHelper();
 	private JButton save;
-	private JButton back;
 	private JLabel groupNameLabel;
 	private JTextField groupName;
 	private JLabel groupSizeLabel;
 	private JButton groupSizeButton;
 	private String groupSize;
+	CLGroupAdministrationPanel clCards;
+
 	
-	public CreateGroupPanel(Frame frame, CardLayoutPanel cards) {
-		super();
-		this.frame = frame;
-		this.cards = cards;
+	public CreateGroupPanel(CLGroupAdministrationPanel clCards) {
+		this.clCards = clCards;
+		setPanel();
+		installListener();
 	}
-	public void setPanels() {
-		
-		createGroupTitle = guihelper.setLabel("Gruppe erstellen", 36);
-		TitlePanel.add(createGroupTitle);
+	
+	public void setPanel() {
+		setPreferredSize(new Dimension(580, 180));
+		setLayout(new GridLayout(3, 2));
+		setBackground(Color.white);
 		save = guihelper.setButton("Speichern");
-		back = guihelper.setButton("Zurück ins Menü");
-		ButtonPanel.add(save);
-		ButtonPanel.add(back);
-		ActionPanel.setLayout(new GridLayout(2, 2));
+		save.setPreferredSize(new Dimension(200, 25));
 		groupNameLabel = guihelper.setLabel("Gruppenname: ", 14);
 		groupName = guihelper.setTextField();
 		groupSizeLabel = guihelper.setLabel("", 14);
 		groupSizeButton = guihelper.setButton("Anzahl bestimmen");
-		ActionPanel.add(groupNameLabel);
-		ActionPanel.add(groupName);
-		ActionPanel.add(groupSizeButton);
-		ActionPanel.add(groupSizeLabel);
-	
+		groupSizeButton.setPreferredSize(new Dimension(200, 25));
+		add(groupNameLabel);
+		add(groupName);
+		add(groupSizeButton);
+		add(groupSizeLabel);
+		add(save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE);
 	}
-	
+	public boolean validateTextField(JTextField text) {
+		if (text.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Es gab einen Fehler bei der Eingabe!");
+			return false;
+			
+		}
+		return true;
+	}
 	public void saveDataAndResetPanel() {
 		try {
 			if (validateTextField(groupName)) {
@@ -64,7 +70,9 @@ public class CreateGroupPanel extends MAINMainPanel{
 					dbhandler.saveGroup(group);
 					groupName.setText("");
 					groupSizeLabel.setText("");
-					JOptionPane.showMessageDialog(CreateGroupPanel.this, "Gruppe erstellt!");
+					//JOptionPane.showMessageDialog(CreateGroupRandomPanel.this, "Gruppe erstellt!");
+					CardLayout cl = (CardLayout)(clCards.getLayout());
+					cl.show(clCards, Frame.GROUPSAVED);
 			}
 		
 		} catch (Exception e) {
@@ -75,20 +83,13 @@ public class CreateGroupPanel extends MAINMainPanel{
 	}
 
 	public void installListener(){
-		back.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				
-				CardLayout cl = (CardLayout)(cards.getLayout());
-				cl.show(cards, Frame.MAINPANEL);
-			}
-		});
+
 		
 		groupSizeButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				groupSize = (String) JOptionPane.showInputDialog(null, "Die Anzahl der Teilnehmer kann hier bestimmt werden.", "Gruppengröße auswählen",
-				        JOptionPane.QUESTION_MESSAGE, null, new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8"}, "");
+				        JOptionPane.QUESTION_MESSAGE, null, new String[] {"5", "6", "7", "8"}, "");
 				groupSizeLabel.setText(groupSize);
 			}
 		});
@@ -97,9 +98,9 @@ public class CreateGroupPanel extends MAINMainPanel{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				saveDataAndResetPanel();
+
 			}
 		});
 	}
-	
+
 }
-	

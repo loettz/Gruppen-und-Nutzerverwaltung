@@ -16,10 +16,11 @@ public class Frame extends JFrame{
 	public final static String EMPTY = "Empty card";
 	public final static String CREATEGROUPRANDOM = "create random group";
 	public final static String GROUPSAVED = "group is saved";
+	public final static String USERSAVED = "user is saved";
 	
 	
 	
-	public JPanel cards = new CardLayoutPanel();
+	public JPanel cards = new MainCardLayoutPanel();
 	//JPanel mainP = new mainPanel(this);
 	//JPanel createUserP = new createUserPanel();
 	

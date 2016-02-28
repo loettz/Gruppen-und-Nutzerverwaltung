@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class UserAdministrationPanel extends MAINMainPanel{
 	private JLabel userAdministrationTitle;
@@ -16,7 +17,9 @@ public class UserAdministrationPanel extends MAINMainPanel{
 	private JButton back;
 	protected EditUsersTreePanel treePanel;
 	private JPanel menuPanel;
-	public UserAdministrationPanel(Frame frame, CardLayoutPanel cards) {
+	protected CLUserAdministrationPanel clCards;
+	
+	public UserAdministrationPanel(Frame frame, MainCardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
@@ -36,6 +39,9 @@ public class UserAdministrationPanel extends MAINMainPanel{
 		menuPanel.add(back);
 		ButtonPanel.add(treePanel);
 		ButtonPanel.add(menuPanel);
+		
+		clCards = new CLUserAdministrationPanel();
+		ActionPanel.add(clCards);
 	}
 
 	public void installListener() {
@@ -45,7 +51,16 @@ public class UserAdministrationPanel extends MAINMainPanel{
 					
 					CardLayout clMain = (CardLayout)(cards.getLayout());
 					clMain.show(cards, Frame.MAINPANEL);
+					CardLayout cl = (CardLayout)(clCards.getLayout());
+					cl.show(clCards, Frame.EMPTY);
 
+				}
+			});
+			createUser.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					CardLayout cl = (CardLayout)(clCards.getLayout());
+					cl.show(clCards, Frame.CREATEUSER);
 				}
 			});
 		

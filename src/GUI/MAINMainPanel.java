@@ -20,7 +20,7 @@ public abstract class MAINMainPanel extends JPanel{
 	protected JLabel TitleLabel = new JLabel();
 	
 	protected Frame frame;
-	protected CardLayoutPanel cards;
+	protected MainCardLayoutPanel cards;
 	
 	protected GUIHelper guihelper = new GUIHelper();
 	

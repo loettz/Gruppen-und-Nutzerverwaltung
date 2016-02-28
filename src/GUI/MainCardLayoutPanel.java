@@ -4,7 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-public class CardLayoutPanel extends JPanel{
+public class MainCardLayoutPanel extends JPanel{
 	private Frame frame;
 		
 	JPanel mainP = new MainPanel(frame, this);
@@ -12,7 +12,7 @@ public class CardLayoutPanel extends JPanel{
 	JPanel createGroupP = new GroupAdministrationPanel(frame, this);
 	JPanel showGroupsP = new EditGroupsPanel(frame, this);
 	
-	public CardLayoutPanel() {
+	public MainCardLayoutPanel() {
 		cards();
 	}
 	

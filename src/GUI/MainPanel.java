@@ -18,7 +18,7 @@ public class MainPanel extends MAINMainPanel{
 	private JButton createGroupButton;
 	private JButton showGroupsButton;
 	
-	public MainPanel(Frame frame, CardLayoutPanel cards) {
+	public MainPanel(Frame frame, MainCardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;

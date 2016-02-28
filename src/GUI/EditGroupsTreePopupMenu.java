@@ -19,7 +19,8 @@ import diesisteinprojekt.Group;
 import diesisteinprojekt.User;
 
 
-public class PopupMenu extends JPopupMenu{
+public class EditGroupsTreePopupMenu extends JPopupMenu{
+	//PopupMenu for EditUserTree
 	JMenuItem deleteGroup;
 	JMenuItem deleteUserFromGroup;
 	JMenuItem addUserToGroup;
@@ -43,6 +44,7 @@ public class PopupMenu extends JPopupMenu{
         addUserToGroup = new JMenuItem("Teilnehmer zu " + elementLabel + " hinzufügen");
         addUserToGroup.setFont(font);
     	if (groups.contains(elementLabel)) {
+    	//adds menu items to popupmenu -> depends on selection(group or user selected?)
     		add(deleteGroup);
     		add(addUserToGroup);
     	}
@@ -54,6 +56,7 @@ public class PopupMenu extends JPopupMenu{
     }
    
     public void popupListener(final JTree tree, final DefaultMutableTreeNode selectedElement){
+    	//expels the selected user from group and removes user from tree
 		deleteUserFromGroup.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
@@ -73,6 +76,7 @@ public class PopupMenu extends JPopupMenu{
 		});
 		
 		deleteGroup.addActionListener(new ActionListener() {
+			//deletes selected group from db and removes group from tree 
 			public void actionPerformed(ActionEvent arg0) {
 				int dialogButton = JOptionPane.YES_NO_OPTION;
 				JOptionPane.showConfirmDialog (null, elementLabel + " unwiderruflich löschen?","Warning",dialogButton);
@@ -87,6 +91,8 @@ public class PopupMenu extends JPopupMenu{
 			}
 		});
 		addUserToGroup.addActionListener(new ActionListener() {
+			//gets all users without group from db and creates a dialog pane to select a user
+			//adds selected user to tree
 			public void actionPerformed(ActionEvent arg0) {
 					ArrayList<String> users = dbhandler.getUserNameList();
 					Object[] options = users.toArray();

@@ -31,7 +31,7 @@ public class GroupAdministrationPanel extends MAINMainPanel{
 	//private JPanel treePanel;
 
 	
-	public GroupAdministrationPanel(Frame frame, CardLayoutPanel cards) {
+	public GroupAdministrationPanel(Frame frame, MainCardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;

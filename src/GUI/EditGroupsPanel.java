@@ -30,9 +30,9 @@ public class EditGroupsPanel extends MAINMainPanel {
 	private JLabel editGroupsTitle;
 	private JButton back;
 	private JTree tree;
-	private PopupMenu menu;
+	private EditGroupsTreePopupMenu menu;
 	
-	public EditGroupsPanel(Frame frame, CardLayoutPanel cards) {
+	public EditGroupsPanel(Frame frame, MainCardLayoutPanel cards) {
 		super();
 		this.frame = frame;
 		this.cards = cards;
@@ -58,7 +58,7 @@ public class EditGroupsPanel extends MAINMainPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					if (tree.getSelectionPath() != null) {
-						menu = new PopupMenu();
+						menu = new EditGroupsTreePopupMenu();
 						menu.setPopupMenu(tree);
 				        menu.show(e.getComponent(), e.getX(), e.getY());	
 					}
